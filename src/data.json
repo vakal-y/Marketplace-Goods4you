@@ -1,0 +1,10 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "name": "Essence Mascara Lash Princess",
+            "price": 110,
+            "image": "./assets/item.png"
+        }
+    ]
+}
