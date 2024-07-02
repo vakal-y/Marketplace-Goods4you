@@ -1,0 +1,49 @@
+@import '../../styles/vars.scss';
+
+.header {
+    width          : 100%;
+    height         : 90px;
+    display        : flex;
+    padding        : 23px 130px;
+    justify-content: space-between;
+    align-items    : center;
+
+    background-color: $violet;
+    color           : $white;
+
+    .logo {
+        font-size  : 30px;
+        font-weight: bold;
+        line-height: 44px;
+    }
+
+    .nav {
+        width          : 340px;
+        height         : 20px;
+        display        : flex;
+        align-items    : center;
+        justify-content: space-between;
+        gap            : 20px;
+
+        font-size  : 14px;
+        font-weight: 600;
+        line-height: 20px;
+
+        .cart {
+            height     : 20px;
+            display    : flex;
+            align-items: center;
+            gap        : 6px;
+
+            .img {
+                width : 20px;
+                height: 20px;
+
+                img {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+}
