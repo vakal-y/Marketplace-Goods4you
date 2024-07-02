@@ -1,3 +1,4 @@
+import './ProductPage.scss'
 
 const ProductPage: React.FC = () => {
     return (

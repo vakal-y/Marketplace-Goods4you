@@ -1,3 +1,4 @@
+import './ProductCard.scss'
 interface ProductCardProps {
     id: number;
     name: string;

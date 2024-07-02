@@ -1,3 +1,5 @@
+import './NotFoundPage.scss'
+
 const NotFoundPage: React.FC = () => {
     return (
         <div className="not-found-page">
