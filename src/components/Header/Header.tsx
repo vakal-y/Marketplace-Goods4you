@@ -5,15 +5,27 @@ import cart from '../../assets/cart.svg';
 const Header: React.FC = () => {
     return (
         <header className={styles.header}>
-            <Link to="/" className={styles.logo}>Goods4you</Link>
+            <div className={styles.logo}>
+                <Link to="/">Goods4you</Link>
+            </div>
             <nav className={styles.nav}>
-                <Link to="/catalog">Catalog</Link>
-                <Link to="/faq">FAQ</Link>
-                <Link to="/cart" className={styles.cart}>
-                    Cart
-                    <img className={styles.img} src={cart} alt="cart" />
-                </Link>
-                <Link to="/user-dashboard">Личный кабинет</Link>
+                <ul className={styles.navList}>
+                    <li className={styles.navItem}>
+                        <Link to="/#catalog">Catalog</Link>
+                    </li>
+                    <li className={styles.navItem}>
+                        <Link to="/#faq">FAQ</Link>
+                    </li>
+                    <li className={styles.navItem}>
+                        <Link to="/cart">
+                            <span>Cart</span>
+                            <img className={styles.navImage} src={cart} alt="cart" />
+                        </Link>
+                    </li>
+                    <li className={styles.navItem}>
+                        <Link to="#">Личный кабинет</Link>
+                    </li>
+                </ul>
             </nav>
         </header>
     );

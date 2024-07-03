@@ -6,11 +6,27 @@
     box-sizing: border-box;
 }
 
-a {
-    text-decoration: none;
-    color          : inherit;
+html,
+body {
+    margin : 0;
+    padding: 0;
+    height : 100%;
 }
 
 body {
-    font-family: 'Jost', sans-serif;
+    display       : flex;
+    flex-direction: column;
+    min-height    : 100vh;
+    font-family   : 'Jost', sans-serif;
+}
+
+#root {
+    display       : flex;
+    flex-direction: column;
+    flex-grow     : 1;
+}
+
+a {
+    text-decoration: none;
+    color          : inherit;
 }

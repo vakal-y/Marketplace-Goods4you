@@ -1,17 +1,12 @@
-import './ProductCard.scss'
-interface ProductCardProps {
-    id: number;
-    name: string;
-    price: number;
-    image: string;
-}
+import styles from './ProductCard.module.scss';
+import { Product } from '../../interfaces/types';
 
-const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image }) => {
+const ProductCard: React.FC<Product> = ({ id, name, price, image }) => {
     return (
-        <div className="product-card">
-            <img src={image} alt={name} />
-            <h2>{name}</h2>
-            <p>{price}$</p>
+        <div className={styles.productCard}>
+            <img src={image} alt={name} className={styles.productImage} />
+            <h2 className={styles.productName}>{name}</h2>
+            <p className={styles.productPrice}>{price}$</p>
         </div>
     );
 };
