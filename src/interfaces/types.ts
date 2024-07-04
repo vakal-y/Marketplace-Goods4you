@@ -5,3 +5,9 @@ export interface Product {
     image: string;
     quantity: number;
 }
+
+export type ScrollToSectionFunction = (id: string) => void;
+
+export interface ScrollToSectionProps {
+    scrollToSection: ScrollToSectionFunction;
+}

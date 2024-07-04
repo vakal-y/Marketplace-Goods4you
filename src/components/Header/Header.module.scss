@@ -1,12 +1,13 @@
 @import '../../styles/vars.scss';
 
 .header {
-    width           : 100%;
-    height          : 90px;
-    display         : flex;
-    padding         : 23px 130px;
-    justify-content : space-between;
-    align-items     : center;
+    width          : 100%;
+    height         : 90px;
+    display        : flex;
+    padding        : 23px 130px;
+    justify-content: space-between;
+    align-items    : center;
+
     background-color: $violet;
     color           : $white;
 
@@ -21,18 +22,19 @@
     }
 
     .nav {
+        width          : auto;
         display        : flex;
         justify-content: flex-end;
         align-items    : center;
-        width          : auto;
 
         .navList {
             display    : flex;
             align-items: center;
-            list-style : none;
             margin     : 0;
             padding    : 0;
             gap        : 20px;
+
+            list-style: none;
 
             .navItem {
                 font-size  : 14px;
@@ -40,9 +42,10 @@
                 line-height: 20px;
 
                 a {
-                    display        : flex;
-                    align-items    : center;
-                    gap            : 6px;
+                    display    : flex;
+                    align-items: center;
+                    gap        : 6px;
+
                     text-decoration: none;
                     color          : inherit;
 

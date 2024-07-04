@@ -6,17 +6,15 @@ import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import CartPage from './pages/CartPage/CartPage';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import ScrollToTop from './components/ScrollToTop';
 import './App.scss';
-
-
+import { scrollToSection } from './helpers/scrollToSection';
 
 const App: React.FC = () => {
+
   return (
     <div className="app">
-      <Header />
+      <Header scrollToSection={scrollToSection} />
       <main className="main-content">
-        <ScrollToTop />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/product/:id" element={<ProductPage />} />
@@ -24,9 +22,9 @@ const App: React.FC = () => {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
-      <Footer />
+      <Footer scrollToSection={scrollToSection} />
     </div>
   );
 };
 
-export default App
+export default App;
