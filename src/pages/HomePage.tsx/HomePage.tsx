@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import styles from './HomePage.module.scss';
+import { Link } from 'react-router-dom';
 import { Product } from '../../interfaces/types';
 import ProductCard from '../../components/ProductCard/ProductCard';
+import { ScrollToSectionProps } from '../../interfaces/types';
 
-const HomePage: React.FC = () => {
+
+const HomePage: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
     const [products, setProducts] = useState<Product[]>([]);
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(12);
@@ -25,7 +28,7 @@ const HomePage: React.FC = () => {
                 <h1>Goods4you</h1>
                 <h3>Any products from famous brands<br />with worldwide delivery</h3>
                 <p>We sell smartphones, laptops, clothes, shoes<br />and many other products at low prices</p>
-                <button className={styles.shopping} onClick={() => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' })}>Go to shopping</button>
+                <Link to="/#catalog" onClick={() => scrollToSection('catalog')} className={styles.shopping}>Go to shopping</Link>
             </section>
             <section id="catalog" className={styles.catalog}>
                 <h2>Catalog</h2>
@@ -34,7 +37,7 @@ const HomePage: React.FC = () => {
                 </form>
                 <div className={styles.cards}>
                     {products.slice(0, perPage).map((product) => (
-                        <ProductCard key={product.id} {...product} />
+                        <ProductCard key={product.id} product={product} />
                     ))}
                 </div>
                 {perPage < products.length && (

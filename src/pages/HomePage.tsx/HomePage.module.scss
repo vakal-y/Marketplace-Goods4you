@@ -7,7 +7,7 @@
 
     .home {
         position      : relative;
-        z-index       : -1;
+        z-index       : 1;
         display       : flex;
         flex-direction: column;
         width         : 100%;
@@ -43,17 +43,26 @@
         }
 
         .shopping {
-            z-index         : 1;
+            z-index         : 2;
             width           : 207px;
             height          : 62px;
+            display         : flex;
+            align-items     : center;
+            justify-content : center;
             border-radius   : 4px;
             background-color: $red;
             border          : none;
+            cursor          : pointer;
+            transition      : background-color 0.3s ease-in-out;
 
             color      : $white;
             font-size  : 16px;
             font-weight: 400;
             line-height: 22px;
+
+            &:hover {
+                background-color: $darkRed;
+            }
         }
     }
 

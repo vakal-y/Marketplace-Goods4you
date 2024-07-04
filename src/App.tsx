@@ -16,7 +16,7 @@ const App: React.FC = () => {
       <Header scrollToSection={scrollToSection} />
       <main className="main-content">
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomePage scrollToSection={scrollToSection} />} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="*" element={<NotFoundPage />} />
