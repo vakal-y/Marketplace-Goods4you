@@ -162,7 +162,6 @@
 
             .faqItem {
                 border-bottom: 1px solid $white;
-                margin-bottom: 10px;
 
                 .faqHeader {
                     display        : flex;
@@ -181,12 +180,33 @@
                     }
 
                     .icon {
-                        color     : $white;
-                        font-size : 24px;
-                        transition: transform 0.3s ease;
+                        width          : 25px;
+                        height         : 25px;
+                        display        : flex;
+                        align-items    : center;
+                        justify-content: center;
+                        position       : relative;
+
+                        &::before,
+                        &::after {
+                            content         : '';
+                            position        : absolute;
+                            width           : 25px;
+                            height          : 2px;
+                            background-color: $white;
+                            transition      : transform 0.4s ease;
+                        }
+
+                        &::before {
+                            transform: rotate(90deg);
+                        }
                     }
 
-                    &.open .icon {
+                    &.open .icon::before {
+                        transform: rotate(-45deg);
+                    }
+
+                    &.open .icon::after {
                         transform: rotate(45deg);
                     }
                 }
@@ -194,12 +214,10 @@
                 .faqContentInner {
                     overflow  : hidden;
                     max-height: 0;
-                    transition: max-height 0.3s ease, padding 0.3s ease;
-                    padding   : 0 10px;
+                    transition: max-height 0.5s ease;
 
                     &.open {
                         max-height: 200px;
-                        padding   : 10px 10px;
                     }
 
                     p {

@@ -93,7 +93,7 @@ const HomePage: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
                                     id={`faq-question-${id}`}
                                 >
                                     <h3>{question}</h3>
-                                    <span className={styles.icon}>{faqOpen.includes(id) ? '-' : '+'}</span>
+                                    <span className={`${styles.icon} ${faqOpen.includes(id) ? styles.open : ''}`}></span>
                                 </div>
                                 <div
                                     className={`${styles.faqContentInner} ${faqOpen.includes(id) ? styles.open : ''}`}
