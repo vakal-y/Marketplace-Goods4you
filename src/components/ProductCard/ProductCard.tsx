@@ -5,21 +5,27 @@ import { Link } from 'react-router-dom';
 
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
     const { id, name, price, image } = product;
+    const hardcodedId = 1;
+
     return (
-        <div className={styles.productCard}>
-            <Link to={`/product/${id}`} className={styles.productLink}>
+        <div className={styles.productCard}
+            aria-labelledby={`product-name-${id}`}
+            aria-describedby={`product-price-${id}`}>
+            <Link to={`/product/${hardcodedId}`}
+                className={styles.productLink}
+                aria-label={`View details for ${name}`}>
                 <div className={styles.productImage}>
-                    <img src={image} alt={name} />
+                    <img src={image} alt={name} aria-describedby={`product-title-${id}`} />
                     <div className={styles.overlay}>
                         <span className={styles.detailsText}>Show details</span>
                     </div>
                 </div>
                 <div className={styles.productInfo}>
                     <div className={styles.productText}>
-                        <h2>{name}</h2>
-                        <p>{price}$</p>
+                        <h2 id={`product-title-${id}`}>{name}</h2>
+                        <p aria-label={`Price: ${price} dollars`}>{price}$</p>
                     </div>
-                    <button className={styles.cardButton}>
+                    <button className={styles.cardButton} aria-label={`Add ${name} to cart`}>
                         <img src={cart} alt="" />
                     </button>
                 </div>

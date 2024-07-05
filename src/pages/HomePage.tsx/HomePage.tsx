@@ -25,27 +25,55 @@ const HomePage: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
     return (
         <div className={styles.homePage}>
             <section id="home" className={styles.home}>
-                <h1>Goods4you</h1>
-                <h3>Any products from famous brands<br />with worldwide delivery</h3>
-                <p>We sell smartphones, laptops, clothes, shoes<br />and many other products at low prices</p>
-                <Link to="/#catalog" onClick={() => scrollToSection('catalog')} className={styles.shopping}>Go to shopping</Link>
+                <div className={styles.homeContent}
+                    aria-labelledby="main-title"
+                    aria-describedby="main-description">
+                    <h1 id="main-title">Goods4you</h1>
+                    <h3 id="sub-title" aria-describedby="main-description">Any products from famous brands<br />with worldwide delivery</h3>
+                    <p id="main-description">We sell smartphones, laptops, clothes, shoes<br />and many other products at low prices</p>
+                    <Link
+                        to="/#catalog"
+                        onClick={() => scrollToSection('catalog')}
+                        className={styles.shopping}
+                        role="button"
+                        aria-label="Go to catalog section">
+                        Go to shopping
+                    </Link>
+                </div>
             </section>
-            <section id="catalog" className={styles.catalog}>
-                <h2>Catalog</h2>
+            <section id="catalog" className={styles.catalog} aria-labelledby="catalog-heading">
+                <h2 id="catalog-heading">Catalog</h2>
                 <form action="" className={styles.search}>
-                    <input type="text" placeholder='Search by title' />
+                    <label htmlFor="search-input" className="visually-hidden"></label>
+                    <input id="search-input" type="text" placeholder="Search by title" aria-label="Search by title" />
                 </form>
-                <div className={styles.cards}>
+                <div className={styles.cards} role="list" aria-label="Product list">
                     {products.slice(0, perPage).map((product) => (
                         <ProductCard key={product.id} product={product} />
                     ))}
                 </div>
                 {perPage < products.length && (
-                    <button className={styles.button} onClick={loadMoreProducts}>Show more</button>
+                    <button className={styles.button}
+                        onClick={loadMoreProducts}
+                        aria-label="Show more products"
+                        aria-controls="catalog">
+                        Show more
+                    </button>
                 )}
             </section>
             <section id="faq" className={styles.faq}>
-                <h2>FAQ</h2>
+                <div className={styles.faqContent}>
+                    <h2>FAQ</h2>
+                    <div>
+                        <h3>How can I track the status of my order?</h3>
+                        <p>After placing your order, you will receive a confirmation email containing your order number and a tracking link. You can also log in to your account on our website and go to the "My Orders" section to track your delivery status.</p>
+                        <h3>What payment methods do you accept?</h3>
+                        <p>After placing your order, you will receive a confirmation email containing your order number and a tracking link. You can also log in to your account on our website and go to the "My Orders" section to track your delivery status.</p>
+                        <h3>How can I return or exchange an item?</h3>
+                        <p>After placing your order, you will receive a confirmation email containing your order number and a tracking link. You can also log in to your account on our website and go to the "My Orders" section to track your delivery status.</p>
+                    </div>
+
+                </div>
             </section>
         </div>
     );
