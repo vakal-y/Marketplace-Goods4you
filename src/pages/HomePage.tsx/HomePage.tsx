@@ -10,6 +10,7 @@ const HomePage: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
     const [products, setProducts] = useState<Product[]>([]);
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(12);
+    const [faqOpen, setFaqOpen] = useState<number[]>([]);
 
     useEffect(() => {
         fetch('/data.json')
@@ -20,6 +21,14 @@ const HomePage: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
 
     const loadMoreProducts = () => {
         setPerPage(perPage + 12);
+    };
+
+    const toggleFaq = (index: number) => {
+        setFaqOpen((prevOpen) =>
+            prevOpen.includes(index)
+                ? prevOpen.filter((i) => i !== index)
+                : [...prevOpen, index]
+        );
     };
 
     return (
@@ -61,18 +70,41 @@ const HomePage: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
                     </button>
                 )}
             </section>
-            <section id="faq" className={styles.faq}>
+            <section id="faq" className={styles.faq} aria-labelledby="faq-heading">
                 <div className={styles.faqContent}>
-                    <h2>FAQ</h2>
+                    <h2 id="faq-heading">FAQ</h2>
                     <div>
-                        <h3>How can I track the status of my order?</h3>
-                        <p>After placing your order, you will receive a confirmation email containing your order number and a tracking link. You can also log in to your account on our website and go to the "My Orders" section to track your delivery status.</p>
-                        <h3>What payment methods do you accept?</h3>
-                        <p>After placing your order, you will receive a confirmation email containing your order number and a tracking link. You can also log in to your account on our website and go to the "My Orders" section to track your delivery status.</p>
-                        <h3>How can I return or exchange an item?</h3>
-                        <p>After placing your order, you will receive a confirmation email containing your order number and a tracking link. You can also log in to your account on our website and go to the "My Orders" section to track your delivery status.</p>
+                        {[{
+                            id: 1, question: 'How can I track the status of my order?',
+                            answer: 'After placing your order, you will receive a confirmation email containing your order number and a tracking link. You can also log in to your account on our website and go to the "My Orders" section to track your delivery status.'
+                        }, {
+                            id: 2, question: 'What payment methods do you accept?',
+                            answer: 'We accept various payment methods including credit cards, PayPal, and other online payment services. You can choose the most convenient method during the checkout process.'
+                        }, {
+                            id: 3, question: 'How can I return or exchange an item?',
+                            answer: 'If you are not satisfied with your purchase, you can return or exchange the item within 30 days of receipt. Please visit our Returns & Exchanges page for detailed instructions.'
+                        }].map(({ id, question, answer }) => (
+                            <div key={id} className={styles.faqItem}>
+                                <div
+                                    className={`${styles.faqHeader} ${faqOpen.includes(id) ? styles.open : ''}`}
+                                    onClick={() => toggleFaq(id)}
+                                    aria-expanded={faqOpen.includes(id)}
+                                    aria-controls={`faq-answer-${id}`}
+                                    id={`faq-question-${id}`}
+                                >
+                                    <h3>{question}</h3>
+                                    <span className={styles.icon}>{faqOpen.includes(id) ? '-' : '+'}</span>
+                                </div>
+                                <div
+                                    className={`${styles.faqContentInner} ${faqOpen.includes(id) ? styles.open : ''}`}
+                                    id={`faq-answer-${id}`}
+                                    aria-labelledby={`faq-question-${id}`}
+                                >
+                                    <p>{answer}</p>
+                                </div>
+                            </div>
+                        ))}
                     </div>
-
                 </div>
             </section>
         </div>
