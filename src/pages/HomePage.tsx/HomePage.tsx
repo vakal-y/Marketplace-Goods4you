@@ -8,7 +8,7 @@ import { ScrollToSectionProps } from '../../interfaces/types';
 
 const HomePage: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
     const [products, setProducts] = useState<Product[]>([]);
-    const [page, setPage] = useState(1);
+    // const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(12);
     const [faqOpen, setFaqOpen] = useState<number[]>([]);
 

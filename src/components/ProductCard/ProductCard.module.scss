@@ -63,17 +63,65 @@
             margin-top     : 10px;
             margin-bottom  : 6px;
             justify-content: space-between;
+            overflow       : hidden;
+            color          : $darkGrey;
 
             h2 {
-                font-size  : 16px;
-                font-weight: 600;
-                line-height: 20px;
+                white-space  : nowrap;
+                overflow     : hidden;
+                text-overflow: ellipsis;
+                font-size    : 16px;
+                font-weight  : 600;
+                line-height  : 20px;
             }
 
             p {
                 font-size  : 18px;
                 font-weight: 400;
                 line-height: 24px;
+            }
+        }
+    }
+
+    .addToCart {
+        display    : flex;
+        margin-left: 10px;
+
+        .cartControls {
+            width          : 188px;
+            height         : 50px;
+            display        : flex;
+            align-items    : center;
+            justify-content: space-between;
+
+            p {
+                width : 50px;
+                height: 20px;
+                color : $darkGrey;
+            }
+
+            .cartButton {
+                width           : 50px;
+                height          : 50px;
+                display         : flex;
+                justify-content : center;
+                align-items     : center;
+                background-color: $red;
+                color           : $white;
+                font-size       : 14px;
+                border          : none;
+                border-radius   : 4px;
+
+                cursor    : pointer;
+                transition: background-color 0.3s ease-in-out;
+
+                &:hover {
+                    background-color: $darkRed;
+                }
+
+                &:focus:not(:hover) {
+                    transition-delay: 0.3s;
+                }
             }
         }
 

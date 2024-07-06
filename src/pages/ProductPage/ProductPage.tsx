@@ -16,7 +16,7 @@ const ProductPage: React.FC = () => {
             .then((response) => response.json())
             .then((data) => {
                 setProducts(data.products);
-                const product = data.products.find((p: Product) => p.id === parseInt(id, 10));
+                const product = data.products.find((p: Product) => p.id === parseInt(id!, 10));
                 if (product && product.images.length > 0) {
                     setCurrentImage(product.images[0]);
                 }
@@ -24,7 +24,7 @@ const ProductPage: React.FC = () => {
             .catch((error) => console.error('Error fetching data:', error));
     }, [id]);
 
-    const product = products.find((product) => product.id === parseInt(id, 10));
+    const product = products.find((product) => product.id === parseInt(id!, 10));
 
     if (!product) {
         return <div>Product not found</div>;
@@ -68,7 +68,7 @@ const ProductPage: React.FC = () => {
                         <img src={starTrue} alt="starTrue" />
                         <img src={starTrue} alt="starTrue" />
                         <img src={starTrue} alt="starTrue" />
-                        <img src={starTrue} alt="starTrue" />
+                        <img src={starFalse} alt="starTrue" />
                     </div>
                     <p>{product.category}</p>
                 </div>
