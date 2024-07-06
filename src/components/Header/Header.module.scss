@@ -55,9 +55,24 @@
                     }
                 }
 
+                &:nth-child(3) {
+                    position: relative;
+                    z-index : 1;
+                }
+
                 .navImage {
                     width : 20px;
                     height: 20px;
+                }
+
+
+                .counterImage {
+                    position: absolute;
+                    z-index : 2;
+                    top     : 12px;
+                    right   : -4px;
+                    width   : 12px;
+                    height  : 12px;
                 }
             }
         }
