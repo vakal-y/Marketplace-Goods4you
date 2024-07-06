@@ -16,10 +16,30 @@ const Cart: React.FC = () => {
     }, []);
 
     return (
-        <div className={styles.cart}>
-            {products.map((product) => (
-                <CartItem key={product.id} product={product} />
-            ))}
+        <div className={styles.cartPage}>
+            <h2>My cart</h2>
+            <div className={styles.cartContent}>
+                <section className={styles.cartForm}>{products.map((product) => (
+                    <CartItem key={product.id} product={product} />
+                ))}</section>
+                <section className={styles.cartTotal}>
+                    <div className={styles.cartCount}>
+                        <div className={styles.count}>
+                            <h5>Total count</h5>
+                            <p>3 items</p>
+                        </div>
+                        <div className={styles.price}>
+                            <h4>Price without discount</h4>
+                            <p>700$</p>
+                        </div>
+                    </div>
+                    <div className={styles.cartTotalPrice}>
+                        <h3>Total price</h3>
+                        <p>590$</p>
+                    </div>
+                </section>
+            </div>
+
         </div>
     );
 };
