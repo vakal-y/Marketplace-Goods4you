@@ -2,9 +2,9 @@ import './NotFoundPage.scss'
 
 const NotFoundPage: React.FC = () => {
     return (
-        <div className="not-found-page">
-            <h1>404 - Page Not Found</h1>
-        </div>
+        <section className="not-found-page" aria-labelledby="not-found-title">
+            <h2 id="not-found-title"><span className='red'>404</span> - Page Not Found</h2>
+        </section>
     );
 };
 

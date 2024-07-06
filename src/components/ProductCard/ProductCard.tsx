@@ -34,9 +34,10 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
 
     return (
         <div className={styles.productCard}
+            role="article"
             aria-labelledby={`product-name-${id}`}
             aria-describedby={`product-price-${id}`}>
-            <Link to="/product/123"
+            <Link to="/product/1"
                 className={styles.productLink}
                 aria-label={`View details for ${name}`}>
                 <div className={styles.productImage}>
@@ -47,8 +48,8 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
                 </div>
                 <div className={styles.productInfo} onClick={handleClick}>
                     <div className={styles.productText}>
-                        <h2 id={`product-title-${id}`}>{name}</h2>
-                        <p aria-label={`Price: ${price} dollars`}>{price}$</p>
+                        <h2 id={`product-name-${id}`}>{name}</h2>
+                        <p id={`product-price-${id}`} aria-label={`Price: ${price} dollars`}>{price}$</p>
                     </div>
                     <div className={styles.addToCart}>
                         {
