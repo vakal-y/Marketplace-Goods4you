@@ -16,30 +16,31 @@ const Cart: React.FC = () => {
     }, []);
 
     return (
-        <div className={styles.cartPage}>
+        <div className={styles.cartPage} aria-label="Shopping Cart Page">
             <h2>My cart</h2>
             <div className={styles.cartContent}>
-                <section className={styles.cartForm}>{products.map((product) => (
-                    <CartItem key={product.id} product={product} />
-                ))}</section>
-                <section className={styles.cartTotal}>
-                    <div className={styles.cartCount}>
-                        <div className={styles.count}>
-                            <h5>Total count</h5>
-                            <p>3 items</p>
+                <section className={styles.cartForm} aria-label="Cart Items">
+                    {products.map((product) => (
+                        <CartItem key={product.id} product={product} />
+                    ))}
+                </section>
+                <section className={styles.cartTotal} aria-label="Cart Summary">
+                    <div className={styles.cartCount} aria-label="Total Items Count">
+                        <div className={styles.count} aria-labelledby="total-items">
+                            <h5 id="total-items">Total count</h5>
+                            <p aria-live="polite">3 items</p>
                         </div>
-                        <div className={styles.price}>
-                            <h4>Price without discount</h4>
-                            <p>700$</p>
+                        <div className={styles.price} aria-labelledby="price-without-discount">
+                            <h4 id="price-without-discount">Price without discount</h4>
+                            <p aria-live="polite">700$</p>
                         </div>
                     </div>
-                    <div className={styles.cartTotalPrice}>
-                        <h3>Total price</h3>
-                        <p>590$</p>
+                    <div className={styles.cartTotalPrice} aria-labelledby="total-price">
+                        <h3 id="total-price">Total price</h3>
+                        <p aria-live="polite">590$</p>
                     </div>
                 </section>
             </div>
-
         </div>
     );
 };
