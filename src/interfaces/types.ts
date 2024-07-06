@@ -2,8 +2,13 @@ export interface Product {
     id: number;
     name: string;
     price: number;
-    image: string;
+    images: string[];
+    description: string;
+    warranty: number;
+    ships: number;
+    rate: number;
     quantity: number;
+    category: string;
 }
 
 export type ScrollToSectionFunction = (id: string) => void;

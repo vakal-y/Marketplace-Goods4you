@@ -5,13 +5,12 @@ import { Link } from 'react-router-dom';
 
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
     const { id, name, price, image } = product;
-    const hardcodedId = 1;
 
     return (
         <div className={styles.productCard}
             aria-labelledby={`product-name-${id}`}
             aria-describedby={`product-price-${id}`}>
-            <Link to={`/product/${hardcodedId}`}
+            <Link to={`/product/${id}`}
                 className={styles.productLink}
                 aria-label={`View details for ${name}`}>
                 <div className={styles.productImage}>
