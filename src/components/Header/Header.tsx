@@ -1,11 +1,26 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
 import cart from '../../assets/cart.svg';
 import counter from '../../assets/counter.svg';
 import { ScrollToSectionProps } from '../../interfaces/types';
 
 const Header: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const handleLinkClick = (section: string, event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        if (location.pathname === '/') {
+            scrollToSection(section);
+        } else {
+            navigate('/', { replace: true });
+            setTimeout(() => {
+                scrollToSection(section);
+            }, 100);
+        }
+    };
+
     return (
         <header className={styles.header} aria-label="Site Header">
             <div className={styles.logo}>
@@ -14,10 +29,10 @@ const Header: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
             <nav className={styles.nav}>
                 <ul className={styles.navList} role="navigation" aria-label="Main Navigation">
                     <li className={styles.navItem}>
-                        <Link to="/" onClick={() => scrollToSection('catalog')} aria-label="Catalog">Catalog</Link>
+                        <Link to="/" onClick={(event) => handleLinkClick('catalog', event)} aria-label="Catalog">Catalog</Link>
                     </li>
                     <li className={styles.navItem}>
-                        <Link to="/" onClick={() => scrollToSection('faq')} aria-label="FAQ">FAQ</Link>
+                        <Link to="/" onClick={(event) => handleLinkClick('faq', event)} aria-label="FAQ">FAQ</Link>
                     </li>
                     <li className={styles.navItem}>
                         <Link to="/cart" aria-label="Cart">

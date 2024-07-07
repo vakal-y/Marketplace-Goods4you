@@ -1,7 +1,7 @@
 import { ScrollToSectionFunction } from '../interfaces/types';
 
-export const scrollToSection: ScrollToSectionFunction = (id) => {
-    const element = document.getElementById(id);
+export const scrollToSection: ScrollToSectionFunction = (section: string) => {
+    const element = document.getElementById(section);
     if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
     }
