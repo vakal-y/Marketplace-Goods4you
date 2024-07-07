@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { Product } from '../../interfaces/types';
 import cart from '../../assets/cart.svg';
 import { Link } from 'react-router-dom';
+import minusBig from '../../assets/minusBig.svg';
+import plusBig from '../../assets/plusBig.svg';
 
 const CartItem: React.FC<{ product: Product }> = ({ product }) => {
     const { id, name, price, images } = product;
@@ -50,13 +52,13 @@ const CartItem: React.FC<{ product: Product }> = ({ product }) => {
                                 onClick={handleDecreaseQuantity}
                                 className={styles.cartButton}
                                 disabled={cartQuantity <= 1}>
-                                -
+                                <img src={minusBig} alt="Decrease quantity" />
                             </button>
                             <p>{cartQuantity} {cartQuantity === 1 ? 'item' : 'items'}</p>
                             <button
                                 onClick={handleIncreaseQuantity}
                                 className={styles.cartButton}>
-                                +
+                                <img src={plusBig} alt="Increase quantity" />
                             </button>
                         </div>
                         <button onClick={handleDelete} className={styles.deleteItem}>Delete</button>

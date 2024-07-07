@@ -47,6 +47,8 @@
             color         : $darkGrey;
 
             .cartLink {
+                cursor: pointer;
+
                 &:hover {
                     text-decoration: underline;
                 }

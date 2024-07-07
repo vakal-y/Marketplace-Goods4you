@@ -98,10 +98,14 @@
                 background-color: $lightGrey;
 
                 font-family: Jost;
-                color      : $grey;
+                color      : $darkGrey;
                 font-size  : 16;
                 font-weight: 400;
                 line-height: 22;
+
+                &::placeholder {
+                    color: $grey;
+                }
             }
         }
 

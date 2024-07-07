@@ -3,6 +3,8 @@ import styles from './ProductCard.module.scss';
 import { Product } from '../../interfaces/types';
 import cart from '../../assets/cart.svg';
 import { Link } from 'react-router-dom';
+import minusSmall from '../../assets/minusSmall.svg';
+import plusSmall from '../../assets/plusSmall.svg';
 
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
     const { id, name, price, images } = product;
@@ -55,9 +57,17 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
                         {
                             cartQuantity > 0 ? (
                                 <div className={styles.cartControls}>
-                                    <button onClick={handleDecreaseQuantity} className={styles.cartButton}>-</button>
+                                    <button
+                                        onClick={handleDecreaseQuantity}
+                                        className={styles.cartButton}>
+                                        <img src={minusSmall} alt="Decrease quantity" />
+                                    </button>
                                     <p>{cartQuantity} {cartQuantity === 1 ? 'item' : 'items'}</p>
-                                    <button onClick={handleIncreaseQuantity} className={styles.cartButton}>+</button>
+                                    <button
+                                        onClick={handleIncreaseQuantity}
+                                        className={styles.cartButton}>
+                                        <img src={plusSmall} alt="Increase quantity" />
+                                    </button>
                                 </div>
                             ) : (
                                 <button onClick={handleAddToCart} className={styles.cardButton} aria-label={`Add ${name} to cart`}>

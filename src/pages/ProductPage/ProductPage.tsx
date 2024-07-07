@@ -5,6 +5,8 @@ import { Product } from '../../interfaces/types';
 import styles from './ProductPage.module.scss';
 import starTrue from '../../assets/startrue.svg';
 import starFalse from '../../assets/starfalse.svg';
+import minusBig from '../../assets/minusBig.svg';
+import plusBig from '../../assets/plusBig.svg';
 
 const ProductPage: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
@@ -127,13 +129,13 @@ const ProductPage: React.FC = () => {
                             <button
                                 onClick={handleDecreaseQuantity}
                                 className={styles.cartButton}>
-                                -
+                                <img src={minusBig} alt="Decrease quantity" />
                             </button>
                             <p>{cartQuantity} {cartQuantity === 1 ? 'item' : 'items'}</p>
                             <button
                                 onClick={handleIncreaseQuantity}
                                 className={styles.cartButton}>
-                                +
+                                <img src={plusBig} alt="Decrease uantity" />
                             </button>
                         </div>
                     ) : (
