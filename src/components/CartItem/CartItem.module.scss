@@ -166,7 +166,7 @@
         width: 90%;
 
         .cartLeft {
-            width: 60%;
+            width: 30%;
         }
 
         .cartControls {
@@ -177,6 +177,7 @@
     @media (max-width: 992px) {
         .cartLeft {
             .cartContent {
+
                 h2 {
                     font-size: 14px;
                 }
@@ -203,6 +204,7 @@
     }
 
     @media (max-width: 768px) {
+        width         : 100%;
         flex-direction: column;
         height        : auto;
 
@@ -212,95 +214,10 @@
         }
 
         .cartControls {
-            width          : 100%;
+            width          : 50%;
             margin-top     : 10px;
+            margin-left    : auto;
             justify-content: space-between;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .cartLeft {
-            .cartContent {
-                h2 {
-                    font-size: 12px;
-                }
-
-                p {
-                    font-size: 14px;
-                }
-            }
-        }
-
-        .cartControls {
-            .addedControl {
-                .cartButton {
-                    width : 30px;
-                    height: 30px;
-                }
-            }
-
-            .addToCart {
-                width : 30px;
-                height: 30px;
-            }
-        }
-    }
-
-    @media (max-width: 480px) {
-        padding: 8px;
-
-        .cartLeft {
-            .cartContent {
-                h2 {
-                    font-size: 10px;
-                }
-
-                p {
-                    font-size: 12px;
-                }
-            }
-        }
-
-        .cartControls {
-            .addedControl {
-                .cartButton {
-                    width : 24px;
-                    height: 24px;
-                }
-            }
-
-            .addToCart {
-                width : 24px;
-                height: 24px;
-            }
-        }
-    }
-
-    @media (max-width: 320px) {
-        .cartLeft {
-            .cartContent {
-                h2 {
-                    font-size: 8px;
-                }
-
-                p {
-                    font-size: 10px;
-                }
-            }
-        }
-
-        .cartControls {
-            .addedControl {
-                .cartButton {
-                    width : 20px;
-                    height: 20px;
-                }
-            }
-
-            .addToCart {
-                width : 20px;
-                height: 20px;
-            }
         }
     }
 }

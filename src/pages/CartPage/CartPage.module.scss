@@ -108,7 +108,10 @@
     }
 
     @media (max-width: 1199px) {
+
         .cartContent {
+            width         : 100%;
+            margin        : 0 auto;
             flex-direction: column;
             align-items   : center;
 
@@ -135,24 +138,20 @@
     }
 
     @media (max-width: 767px) {
-        .cartContent {
-            .cartForm {
-                padding: 15px;
-            }
+        width     : 100%;
+        margin-top: 10px;
 
-            .cartTotal {
-                margin-top: 30px;
-            }
-        }
-    }
-
-    @media (max-width: 576px) {
         .cartContent {
+            width  : 100%;
+            padding: 0 10px;
+
             .cartForm {
+                width  : 100%;
                 padding: 10px;
             }
 
             .cartTotal {
+                width     : 100%;
                 margin-top: 20px;
             }
         }
