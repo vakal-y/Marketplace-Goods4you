@@ -1,7 +1,7 @@
 @import '../../styles/vars.scss';
 
 .footer {
-    width           : 100%;
+    width           : 1440px;
     height          : 90px;
     display         : flex;
     padding         : 23px 130px;
@@ -50,6 +50,35 @@
                     }
                 }
             }
+        }
+    }
+
+    @media (max-width: 1024px) {
+
+        .logo {
+            font-size: 24px;
+        }
+    }
+
+    @media (max-width: 768px) {
+
+        .logo {
+            font-size: 20px;
+        }
+
+        .navList {
+            gap: 20px;
+        }
+    }
+
+    @media (max-width: 576px) {
+
+        .logo {
+            font-size: 18px;
+        }
+
+        .navList {
+            gap: 15px;
         }
     }
 }

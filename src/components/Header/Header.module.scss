@@ -76,4 +76,33 @@
             }
         }
     }
+
+    @media (max-width: 1024px) {
+
+        .logo {
+            font-size: 24px;
+        }
+    }
+
+    @media (max-width: 768px) {
+
+        .logo {
+            font-size: 20px;
+        }
+
+        .navList {
+            gap: 20px;
+        }
+    }
+
+    @media (max-width: 576px) {
+
+        .logo {
+            font-size: 18px;
+        }
+
+        .navList {
+            gap: 15px;
+        }
+    }
 }

@@ -242,3 +242,157 @@
         }
     }
 }
+
+@media (max-width: 768px) {
+    .homePage {
+        .homeContent {
+
+            h1 {
+                font-size  : 120px;
+                line-height: 150px;
+            }
+
+            h3 {
+                font-size  : 30px;
+                line-height: 42px;
+            }
+
+            p {
+                font-size  : 16px;
+                line-height: 24px;
+            }
+
+            .shopping {
+                width      : 207px;
+                height     : 62px;
+                font-size  : 16px;
+                line-height: 22px;
+            }
+        }
+    }
+
+    .catalog {
+        gap: 30px;
+
+        h2 {
+            font-size  : 30px;
+            line-height: 46px;
+        }
+
+        .search input {
+            font-size  : 16px;
+            line-height: 24px;
+        }
+
+        .cards {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            column-gap           : 30px;
+        }
+
+        .button {
+            max-width  : 200px;
+            height     : 60px;
+            font-size  : 18px;
+            line-height: 24px;
+        }
+    }
+
+    .faq {
+        .faqContent {
+
+            h2 {
+                font-size  : 30px;
+                line-height: 46px;
+            }
+
+            .faqItem {
+                .faqHeader h3 {
+                    font-size  : 20px;
+                    line-height: 30px;
+                }
+
+                .faqContentInner p {
+                    font-size  : 16px;
+                    line-height: 26px;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 769px) {
+    .homePage {
+        .homeContent {
+
+            h1 {
+                font-size  : 150px;
+                line-height: 200px;
+            }
+
+            h3 {
+                font-size  : 36px;
+                line-height: 50px;
+            }
+
+            p {
+                font-size  : 18px;
+                line-height: 28px;
+            }
+
+            .shopping {
+                width      : 230px;
+                height     : 70px;
+                font-size  : 18px;
+                line-height: 24px;
+            }
+        }
+    }
+
+    .catalog {
+        gap: 40px;
+
+        h2 {
+            font-size  : 36px;
+            line-height: 56px;
+        }
+
+        .search input {
+            font-size  : 18px;
+            line-height: 28px;
+        }
+
+        .cards {
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            column-gap           : 40px;
+        }
+
+        .button {
+            max-width  : 230px;
+            height     : 70px;
+            font-size  : 20px;
+            line-height: 26px;
+        }
+    }
+
+    .faq {
+        .faqContent {
+
+            h2 {
+                font-size  : 36px;
+                line-height: 56px;
+            }
+
+            .faqItem {
+                .faqHeader h3 {
+                    font-size  : 24px;
+                    line-height: 36px;
+                }
+
+                .faqContentInner p {
+                    font-size  : 18px;
+                    line-height: 28px;
+                }
+            }
+        }
+    }
+}

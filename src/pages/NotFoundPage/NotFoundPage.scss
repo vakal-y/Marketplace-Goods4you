@@ -17,3 +17,80 @@
         }
     }
 }
+
+@media (max-width: 1280px) {
+    .not-found-page {
+        width: 960px;
+
+        h2 {
+            font-size  : 34px;
+            line-height: 54px;
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .not-found-page {
+        width: 860px;
+
+        h2 {
+            font-size  : 32px;
+            line-height: 50px;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .not-found-page {
+        width: 600px;
+
+        h2 {
+            font-size  : 28px;
+            line-height: 46px;
+        }
+    }
+}
+
+@media (max-width: 600px) {
+    .not-found-page {
+        width: 480px;
+
+        h2 {
+            font-size  : 26px;
+            line-height: 42px;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .not-found-page {
+        width: 414px;
+
+        h2 {
+            font-size  : 24px;
+            line-height: 40px;
+        }
+    }
+}
+
+@media (max-width: 414px) {
+    .not-found-page {
+        width: 375px;
+
+        h2 {
+            font-size  : 22px;
+            line-height: 38px;
+        }
+    }
+}
+
+@media (max-width: 375px) {
+    .not-found-page {
+        width: 320px;
+
+        h2 {
+            font-size  : 20px;
+            line-height: 36px;
+        }
+    }
+}

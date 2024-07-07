@@ -154,4 +154,209 @@
             }
         }
     }
+
+    @media (max-width: 1200px) {
+        width: 90%;
+
+        .productImage {
+            width : 100%;
+            height: auto;
+        }
+
+        .productInfo {
+            .productText {
+                h2 {
+                    font-size: 14px;
+                }
+
+                p {
+                    font-size: 16px;
+                }
+            }
+        }
+
+        .addToCart {
+            .cartControls {
+                .cartButton {
+                    width : 40px;
+                    height: 40px;
+                }
+            }
+
+            .cardButton {
+                width : 40px;
+                height: 40px;
+            }
+        }
+    }
+
+    @media (max-width: 992px) {
+        .productImage {
+            height: 250px;
+        }
+
+        .productInfo {
+            .productText {
+                h2 {
+                    font-size: 12px;
+                }
+
+                p {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .addToCart {
+            .cartControls {
+                .cartButton {
+                    width : 35px;
+                    height: 35px;
+                }
+            }
+
+            .cardButton {
+                width : 35px;
+                height: 35px;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        width: 100%;
+
+        .productImage {
+            height: 200px;
+        }
+
+        .productInfo {
+            flex-direction: column;
+            align-items   : flex-start;
+
+            .productText {
+                width: 100%;
+
+                h2 {
+                    font-size: 14px;
+                }
+
+                p {
+                    font-size: 12px;
+                }
+            }
+        }
+
+        .addToCart {
+            margin-left: 0;
+            margin-top : 10px;
+
+            .cartControls {
+                .cartButton {
+                    width : 30px;
+                    height: 30px;
+                }
+            }
+
+            .cardButton {
+                width : 30px;
+                height: 30px;
+            }
+        }
+    }
+
+    @media (max-width: 576px) {
+        .productImage {
+            height: 180px;
+        }
+
+        .productInfo {
+            .productText {
+                h2 {
+                    font-size: 12px;
+                }
+
+                p {
+                    font-size: 10px;
+                }
+            }
+        }
+
+        .addToCart {
+            .cartControls {
+                .cartButton {
+                    width : 25px;
+                    height: 25px;
+                }
+            }
+
+            .cardButton {
+                width : 25px;
+                height: 25px;
+            }
+        }
+    }
+
+    @media (max-width: 480px) {
+        .productImage {
+            height: 150px;
+        }
+
+        .productInfo {
+            .productText {
+                h2 {
+                    font-size: 10px;
+                }
+
+                p {
+                    font-size: 8px;
+                }
+            }
+        }
+
+        .addToCart {
+            .cartControls {
+                .cartButton {
+                    width : 20px;
+                    height: 20px;
+                }
+            }
+
+            .cardButton {
+                width : 20px;
+                height: 20px;
+            }
+        }
+    }
+
+    @media (max-width: 320px) {
+        .productImage {
+            height: 120px;
+        }
+
+        .productInfo {
+            .productText {
+                h2 {
+                    font-size: 8px;
+                }
+
+                p {
+                    font-size: 6px;
+                }
+            }
+        }
+
+        .addToCart {
+            .cartControls {
+                .cartButton {
+                    width : 15px;
+                    height: 15px;
+                }
+            }
+
+            .cardButton {
+                width : 15px;
+                height: 15px;
+            }
+        }
+    }
 }
