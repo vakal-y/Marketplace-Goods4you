@@ -8,15 +8,14 @@
     align-items    : flex-start;
 
     .productGallery {
-        width          : 520px;
-        height         : 600px;
-        display        : flex;
-        flex-direction : column;
-        justify-content: flex-end;
+        width         : 520px;
+        height        : 600px;
+        display       : flex;
+        flex-direction: column;
+
 
         .mainImage {
-            width : 520px;
-            height: 520px;
+            width: 520px;
 
             img {
                 width     : 100%;
@@ -25,10 +24,11 @@
         }
 
         .gallery {
-            height    : 70px;
-            display   : flex;
-            box-sizing: border-box;
-            margin    : 10px 0;
+            height       : 70px;
+            display      : flex;
+            box-sizing   : border-box;
+            margin       : 5px 0;
+            margin-bottom: auto;
 
             gap: 20px;
 

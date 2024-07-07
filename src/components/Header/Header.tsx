@@ -27,7 +27,7 @@ const Header: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
                         </Link>
                     </li>
                     <li className={styles.navItem}>
-                        <Link to="#" aria-label="User Account">Личный кабинет</Link>
+                        <Link to="#" aria-label="User Account">Johnson Smith</Link>
                     </li>
                 </ul>
             </nav>

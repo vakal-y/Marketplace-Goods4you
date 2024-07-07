@@ -51,7 +51,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
                 <div className={styles.productInfo} onClick={handleClick}>
                     <div className={styles.productText}>
                         <h2 id={`product-name-${id}`}>{name}</h2>
-                        <p id={`product-price-${id}`} aria-label={`Price: ${price} dollars`}>{price}$</p>
+                        <p id={`product-price-${id}`} aria-label={`Price: ${price} dollars`}>{price} $</p>
                     </div>
                     <div className={styles.addToCart}>
                         {

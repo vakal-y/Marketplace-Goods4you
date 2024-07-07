@@ -1,7 +1,7 @@
 @import '../../styles/vars.scss';
 
 .header {
-    width          : 100%;
+    width          : 1440px;
     height         : 90px;
     display        : flex;
     padding        : 23px 130px;
@@ -22,17 +22,17 @@
     }
 
     .nav {
-        width          : auto;
-        display        : flex;
-        justify-content: flex-end;
-        align-items    : center;
+        width      : auto;
+        display    : flex;
+        margin-left: auto;
+        align-items: center;
 
         .navList {
             display    : flex;
             align-items: center;
             margin     : 0;
             padding    : 0;
-            gap        : 20px;
+            gap        : 40px;
 
             list-style: none;
 
@@ -64,7 +64,6 @@
                     width : 20px;
                     height: 20px;
                 }
-
 
                 .counterImage {
                     position: absolute;
