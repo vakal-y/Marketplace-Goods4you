@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Product } from '../../interfaces/types';
 import styles from './CartPage.module.scss';
 import CartItem from '../../components/CartItem/CartItem';
@@ -17,6 +18,10 @@ const Cart: React.FC = () => {
 
     return (
         <div className={styles.cartPage} aria-label="Shopping Cart Page">
+            <Helmet>
+                <title>My cart | Goods4you</title>
+                <meta name="description" content="Any products from famous brands with worldwide delivery" />
+            </Helmet>
             <h2>My cart</h2>
             <div className={styles.cartContent}>
                 <section className={styles.cartForm} aria-label="Cart Items">

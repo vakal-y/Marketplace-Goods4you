@@ -1,4 +1,5 @@
 import React from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage.tsx/HomePage';
 import ProductPage from './pages/ProductPage/ProductPage';
@@ -15,12 +16,14 @@ const App: React.FC = () => {
     <div className="app">
       <Header scrollToSection={scrollToSection} />
       <main className="main-content">
-        <Routes>
-          <Route path="/" element={<HomePage scrollToSection={scrollToSection} />} />
-          <Route path="/product/:id" element={<ProductPage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+        <HelmetProvider>
+          <Routes>
+            <Route path="/" element={<HomePage scrollToSection={scrollToSection} />} />
+            <Route path="/product/:id" element={<ProductPage />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </HelmetProvider>
       </main>
       <Footer scrollToSection={scrollToSection} />
     </div>

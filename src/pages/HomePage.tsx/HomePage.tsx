@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import styles from './HomePage.module.scss';
 import { Link } from 'react-router-dom';
 import { Product } from '../../interfaces/types';
@@ -8,7 +9,6 @@ import { ScrollToSectionProps } from '../../interfaces/types';
 
 const HomePage: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
     const [products, setProducts] = useState<Product[]>([]);
-    // const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(12);
     const [faqOpen, setFaqOpen] = useState<number[]>([]);
 
@@ -33,6 +33,10 @@ const HomePage: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
 
     return (
         <div className={styles.homePage}>
+            <Helmet>
+                <title>Catalog | Goods4you</title>
+                <meta name="description" content="Any products from famous brands with worldwide delivery" />
+            </Helmet>
             <section id="home" className={styles.home}>
                 <div className={styles.homeContent}
                     aria-labelledby="main-title"

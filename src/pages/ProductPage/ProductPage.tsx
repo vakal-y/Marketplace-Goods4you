@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Product } from '../../interfaces/types';
 import styles from './ProductPage.module.scss';
@@ -49,6 +50,10 @@ const ProductPage: React.FC = () => {
             className={styles.product}
             role="region"
             aria-labelledby="product-title">
+            <Helmet>
+                <title>Essence Mascara Lash Princess | Goods4you</title>
+                <meta name="description" content="Any products from famous brands with worldwide delivery" />
+            </Helmet>
             <section className={styles.productGallery}>
                 <div className={styles.mainImage}>
                     <img src={currentImage} alt={product.name} />
