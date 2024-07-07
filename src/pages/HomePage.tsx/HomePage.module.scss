@@ -247,87 +247,99 @@
     .homePage {
         width: 100%;
 
-        .homeContent {
+        .home {
+            width : 100%;
+            height: 300px;
+
+            .homeContent {
+                width  : 100%;
+                padding: 10px;
+
+                h1 {
+                    font-size  : 80px;
+                    line-height: 100px;
+                    top        : 130px;
+                    left       : 70px;
+                }
+
+                h3 {
+                    font-size  : 30px;
+                    line-height: 42px;
+                }
+
+                p {
+                    font-size  : 16px;
+                    line-height: 24px;
+                }
+
+                .shopping {
+                    width      : 207px;
+                    height     : 62px;
+                    font-size  : 16px;
+                    line-height: 22px;
+                }
+            }
+        }
+
+        .catalog {
             width  : 100%;
             padding: 0 10px;
-
-            h1 {
-                font-size  : 20px;
-                line-height: 50px;
-            }
-
-            h3 {
-                font-size  : 30px;
-                line-height: 42px;
-            }
-
-            p {
-                font-size  : 16px;
-                line-height: 24px;
-            }
-
-            .shopping {
-                width      : 207px;
-                height     : 62px;
-                font-size  : 16px;
-                line-height: 22px;
-            }
-        }
-    }
-
-    .catalog {
-        width  : 100%;
-        padding: 0 10px;
-        gap    : 30px;
-
-        h2 {
-            font-size  : 30px;
-            line-height: 46px;
-        }
-
-        .search input {
-            width      : 100%;
-            font-size  : 16px;
-            line-height: 24px;
-        }
-
-        .cards {
-            width                : 100%;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            column-gap           : 30px;
-        }
-
-        .button {
-            max-width  : 200px;
-            height     : 60px;
-            font-size  : 18px;
-            line-height: 24px;
-        }
-    }
-
-    .faq {
-        width  : 100%;
-        padding: 0 10px;
-
-        .faqContent {
-            width: 100%;
+            gap    : 30px;
 
             h2 {
                 font-size  : 30px;
                 line-height: 46px;
             }
 
-            .faqItem {
+            .search {
                 width: 100%;
 
-                .faqHeader h3 {
-                    font-size  : 20px;
-                    line-height: 30px;
+                input {
+                    width      : 100%;
+                    font-size  : 16px;
+                    line-height: 24px;
+                }
+            }
+
+            .cards {
+                width                : 100%;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                column-gap           : 10px;
+            }
+
+            .button {
+                width      : 35%;
+                height     : 60px;
+                font-size  : 18px;
+                line-height: 24px;
+            }
+        }
+
+        .faq {
+            width  : 100%;
+            padding: 0 10px;
+
+            .faqContent {
+                width  : 100%;
+                padding: 0 auto;
+
+                h2 {
+                    font-size  : 30px;
+                    line-height: 46px;
                 }
 
-                .faqContentInner p {
-                    font-size  : 16px;
-                    line-height: 26px;
+                .faqItem {
+                    width: 100%;
+
+                    .faqHeader h3 {
+                        font-size  : 20px;
+                        line-height: 30px;
+                    }
+
+                    .faqContentInner p {
+                        font-size  : 16px;
+                        line-height: 26px;
+                    }
                 }
             }
         }
