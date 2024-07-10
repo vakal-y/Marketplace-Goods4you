@@ -1,3 +1,5 @@
+import store from "../store/store";
+
 export interface Product {
     id: number;
     name: string;
@@ -15,4 +17,13 @@ export type ScrollToSectionFunction = (id: string) => void;
 
 export interface ScrollToSectionProps {
     scrollToSection: ScrollToSectionFunction;
+}
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
+export interface CartState {
+    items: any[];
+    status: 'idle' | 'loading' | 'succeeded' | 'failed';
+    error: string | null;
 }
