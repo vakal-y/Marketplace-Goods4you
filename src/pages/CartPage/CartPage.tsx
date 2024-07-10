@@ -1,20 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCart, selectCartItems } from '../../slices/cartSlice';
 import { RootState } from '../../interfaces/types';
+import { Product } from '../../interfaces/types';
 import styles from './CartPage.module.scss';
 import CartItem from '../../components/CartItem/CartItem';
+import { useGetCartByUserIdQuery, FetchBaseQueryError } from '../../slices/apiSlice';
+import { fetchCart } from '../../slices/cartSlice';
 
 const Cart: React.FC = () => {
     const dispatch = useDispatch();
-    const products = useSelector(selectCartItems);
+    const products = useSelector((state: RootState) => state.cart.items);
     const cartStatus = useSelector((state: RootState) => state.cart.status);
-    const userId = '1';
+    const userId = '5';
+
+    const { data: cartData, error: cartError, isLoading: cartLoading } = useGetCartByUserIdQuery(userId) as {
+        data: Product[] | undefined;
+        error: FetchBaseQueryError | null;
+        isLoading: boolean;
+    };
 
     useEffect(() => {
         if (cartStatus === 'idle') {
-            dispatch(fetchCart(userId));
+            dispatch<any>(fetchCart(userId));
         }
     }, [cartStatus, dispatch]);
 
@@ -26,8 +34,6 @@ const Cart: React.FC = () => {
         return <p>Failed to load cart.</p>
     }
 
-    // const [products, setProducts] = useState<Product[]>([]);
-    // useEffect(() => {
     //     fetch('/data.json')
     //         .then((response) => response.json())
     //         .then((data) => {
