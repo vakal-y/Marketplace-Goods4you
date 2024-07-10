@@ -13,7 +13,6 @@
         display       : flex;
         flex-direction: column;
 
-
         .mainImage {
             width: 520px;
 
@@ -31,8 +30,7 @@
             margin-bottom             : auto;
             overflow-x                : auto;
             -webkit-overflow-scrolling: touch;
-
-            gap: 20px;
+            gap                       : 20px;
 
             img {
                 width        : 70px;
@@ -121,18 +119,16 @@
             margin-top      : 24px;
             padding         : 12px;
             align-items     : center;
+            justify-content : center;
             background-color: $buyBackground;
             border-radius   : 6px;
 
             .productPriceInfo {
-                width      : 331px;
-                height     : 62px;
+                width      : 100%;
                 display    : flex;
-                padding    : 0 20px;
                 align-items: center;
 
                 .productPrices {
-                    height        : 62px;
                     display       : flex;
                     flex-direction: column;
                     padding-right : 24px;
@@ -155,7 +151,6 @@
                 }
 
                 .productPersonalDiscount {
-                    height      : 24px;
                     display     : flex;
                     padding-left: 24px;
                     gap         : 8px;
@@ -166,59 +161,35 @@
                 }
             }
 
-            .productAddToCart {
-                width           : 176px;
-                max-width       : 300px;
-                height          : 62px;
-                display         : flex;
-                margin-left     : 89px;
-                justify-content : center;
-                align-items     : center;
-                background-color: $red;
-                border          : none;
-                border-radius   : 4px;
+            .productButtons {
+                width      : 254px;
+                display    : flex;
+                margin-left: auto;
+                align-items: center;
 
-                cursor    : pointer;
-                transition: background-color 0.3s ease-in-out;
-
-                color      : $white;
-                font-size  : 16px;
-                font-weight: 400;
-                line-height: 22px;
-
-                &:hover {
-                    background-color: $darkRed;
+                .productAddToCart,
+                .cartControls {
+                    display    : flex;
+                    align-items: center;
+                    margin-left: auto;
                 }
 
-                &:focus:not(:hover) {
-                    transition-delay: 0.3s;
-                }
-            }
+                .productAddToCart {
+                    width : 176px;
+                    height: 62px;
 
-            .cartControls {
-                width          : 254px;
-                max-width      : 300px;
-                height         : 62px;
-                display        : flex;
-                align-items    : center;
-                justify-content: space-between;
-                margin-left    : 11px;
-
-                .cartButton {
-                    width           : 70px;
-                    height          : 62px;
-                    display         : flex;
                     justify-content : center;
-                    align-items     : center;
                     background-color: $red;
-                    color           : $white;
-                    font-size       : 24px;
                     border          : none;
                     border-radius   : 4px;
 
-
                     cursor    : pointer;
                     transition: background-color 0.3s ease-in-out;
+
+                    color      : $white;
+                    font-size  : 16px;
+                    font-weight: 400;
+                    line-height: 22px;
 
                     &:hover {
                         background-color: $darkRed;
@@ -226,6 +197,43 @@
 
                     &:focus:not(:hover) {
                         transition-delay: 0.3s;
+                    }
+                }
+
+                .cartControls {
+                    width          : 100%;
+                    display        : flex;
+                    margin-left    : auto;
+                    justify-content: space-between;
+                    gap            : 30px;
+
+                    .cartButton {
+                        width           : 70px;
+                        height          : 62px;
+                        display         : flex;
+                        justify-content : center;
+                        align-items     : center;
+                        background-color: $red;
+                        color           : $white;
+                        font-size       : 24px;
+                        border          : none;
+                        border-radius   : 4px;
+
+                        cursor    : pointer;
+                        transition: background-color 0.3s ease-in-out;
+
+                        &:hover {
+                            background-color: $darkRed;
+                        }
+
+                        &:focus:not(:hover) {
+                            transition-delay: 0.3s;
+                        }
+
+                        img {
+                            width : 24px;
+                            height: 24px;
+                        }
                     }
 
                     p {
@@ -256,6 +264,25 @@
 
         .productDescription {
             margin-top: 20px;
+        }
+
+        .productBuy {
+            flex-direction: column;
+
+            .productPriceInfo,
+            .cartControls {
+                width : 100%;
+                margin: 10px 0;
+            }
+
+            .productAddToCart {
+                width : 200px;
+                height: 100%;
+            }
+
+            .cartControls {
+                margin-left: 0;
+            }
         }
     }
 

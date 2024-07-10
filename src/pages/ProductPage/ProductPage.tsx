@@ -121,31 +121,33 @@ const ProductPage: React.FC = () => {
                             aria-label="Your discount: 14.5%">
                             Your discount: <b>14.5%</b>
                         </p>
-                    </div>
-                    {cartQuantity > 0 ? (
-                        <div
-                            className={styles.cartControls}
-                            aria-label={`${cartQuantity} items in cart`}>
-                            <button
-                                onClick={handleDecreaseQuantity}
-                                className={styles.cartButton}>
-                                <img src={minusBig} alt="Decrease quantity" />
-                            </button>
-                            <p>{cartQuantity} {cartQuantity === 1 ? 'item' : 'items'}</p>
-                            <button
-                                onClick={handleIncreaseQuantity}
-                                className={styles.cartButton}>
-                                <img src={plusBig} alt="Decrease uantity" />
-                            </button>
+                        <div className={styles.productButtons}>
+                            {cartQuantity > 0 ? (
+                                <div
+                                    className={styles.cartControls}
+                                    aria-label={`${cartQuantity} items in cart`}>
+                                    <button
+                                        onClick={handleDecreaseQuantity}
+                                        className={styles.cartButton}>
+                                        <img src={minusBig} alt="Decrease quantity" />
+                                    </button>
+                                    <p>{cartQuantity} {cartQuantity === 1 ? 'item' : 'items'}</p>
+                                    <button
+                                        onClick={handleIncreaseQuantity}
+                                        className={styles.cartButton}>
+                                        <img src={plusBig} alt="Increase quantity" />
+                                    </button>
+                                </div>
+                            ) : (
+                                <button
+                                    onClick={handleAddToCart}
+                                    className={styles.productAddToCart}
+                                    aria-label="Add to Cart">
+                                    Add to Cart
+                                </button>
+                            )}
                         </div>
-                    ) : (
-                        <button
-                            onClick={handleAddToCart}
-                            className={styles.productAddToCart}
-                            aria-label="Add to Cart">
-                            Add to Cart
-                        </button>
-                    )}
+                    </div>
                 </div>
             </section>
         </div>
