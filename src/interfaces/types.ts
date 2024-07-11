@@ -6,15 +6,17 @@ export interface Product {
     price: number;
     thumbnail: string;
     quantity: number;
+    availabilityStatus: string;
     total: number;
     discountPercentage: number;
     discountTotal: number;
     description: string;
-    warranty: number;
-    ships: number;
-    rate: number;
+    warrantyInformation: string;
+    shippingInformation: string;
+    rating: number;
     category: string;
-
+    images: string[];
+    tags: string[];
 }
 
 export type ScrollToSectionFunction = (id: string) => void;

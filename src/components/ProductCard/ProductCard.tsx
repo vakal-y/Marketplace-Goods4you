@@ -7,7 +7,7 @@ import minusSmall from '../../assets/minusSmall.svg';
 import plusSmall from '../../assets/plusSmall.svg';
 
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
-    const { id, name, price, images } = product;
+    const { id, title, price, images } = product;
     const mainImage = images[0];
     const [cartQuantity, setCartQuantity] = useState<number>(0);
 
@@ -41,16 +41,16 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
             aria-describedby={`product-price-${id}`}>
             <Link to="/product/1"
                 className={styles.productLink}
-                aria-label={`View details for ${name}`}>
+                aria-label={`View details for ${title}`}>
                 <div className={styles.productImage}>
-                    <img src={mainImage} alt={name} aria-describedby={`product-title-${id}`} />
+                    <img src={mainImage} alt={title} aria-describedby={`product-title-${id}`} />
                     <div className={styles.overlay}>
                         <span className={styles.detailsText}>Show details</span>
                     </div>
                 </div>
                 <div className={styles.productInfo} onClick={handleClick}>
                     <div className={styles.productText}>
-                        <h2 id={`product-name-${id}`}>{name}</h2>
+                        <h2 id={`product-name-${id}`}>{title}</h2>
                         <p id={`product-price-${id}`} aria-label={`Price: ${price} dollars`}>{price} $</p>
                     </div>
                     <div className={styles.addToCart}>
@@ -70,8 +70,8 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
                                     </button>
                                 </div>
                             ) : (
-                                <button onClick={handleAddToCart} className={styles.cardButton} aria-label={`Add ${name} to cart`}>
-                                    <img src={cart} alt={name} />
+                                <button onClick={handleAddToCart} className={styles.cardButton} aria-label={`Add ${title} to cart`}>
+                                    <img src={cart} alt={title} />
                                 </button>
                             )
                         }

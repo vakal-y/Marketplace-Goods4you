@@ -1,5 +1,5 @@
 import styles from './CartItem.module.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Product } from '../../interfaces/types';
 import cart from '../../assets/cart.svg';
 import { Link } from 'react-router-dom';
@@ -7,10 +7,14 @@ import minusSmall from '../../assets/minusSmall.svg';
 import plusSmall from '../../assets/plusSmall.svg';
 
 const CartItem: React.FC<{ product: Product }> = ({ product }) => {
-    const { id, title, price, thumbnail } = product;
+    const { id, title, price, thumbnail, quantity } = product;
     const mainImage = thumbnail;
-    const [cartQuantity, setCartQuantity] = useState<number>(1);
+    const [cartQuantity, setCartQuantity] = useState<number>(quantity);
     const [showControls, setShowControls] = useState<boolean>(true);
+
+    useEffect(() => {
+        setCartQuantity(quantity);
+    }, [quantity]);
 
     const handleAddToCart = () => {
         setCartQuantity(1);
