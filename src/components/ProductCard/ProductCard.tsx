@@ -1,37 +1,30 @@
-import { useState } from 'react';
 import styles from './ProductCard.module.scss';
-import { Product } from '../../interfaces/types';
+import { ProductCardProps } from '../../interfaces/types';
 import cart from '../../assets/cart.svg';
 import { Link } from 'react-router-dom';
 import minusSmall from '../../assets/minusSmall.svg';
 import plusSmall from '../../assets/plusSmall.svg';
 
-const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
-    const { id, title, price, images } = product;
-    const mainImage = images[0];
-    const [cartQuantity, setCartQuantity] = useState<number>(0);
+const ProductCard: React.FC<ProductCardProps> = ({ product, cartQuantity, onAddToCart, onRemoveFromCart }) => {
+    const { id, title, price, discountPercentage, thumbnail } = product;
+    const discountedPrice = (price - (price * discountPercentage / 100)).toFixed(2);
 
     const handleAddToCart = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.stopPropagation();
         event.preventDefault();
-        setCartQuantity((prevQuantity) => prevQuantity + 1);
+        onAddToCart();
     };
 
     const handleIncreaseQuantity = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.stopPropagation();
         event.preventDefault();
-        setCartQuantity((prevQuantity) => prevQuantity + 1);
+        onAddToCart();
     };
 
     const handleDecreaseQuantity = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.stopPropagation();
         event.preventDefault();
-        setCartQuantity((prevQuantity) => (prevQuantity > 0 ? prevQuantity - 1 : 0));
-    };
-
-    const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        event.stopPropagation();
-        event.preventDefault();
+        onRemoveFromCart();
     };
 
     return (
@@ -39,19 +32,21 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
             role="article"
             aria-labelledby={`product-name-${id}`}
             aria-describedby={`product-price-${id}`}>
-            <Link to="/product/1"
+            <Link to={`/product/${id}`}
                 className={styles.productLink}
                 aria-label={`View details for ${title}`}>
                 <div className={styles.productImage}>
-                    <img src={mainImage} alt={title} aria-describedby={`product-title-${id}`} />
+                    <img src={thumbnail} alt={title} aria-describedby={`product-title-${id}`} />
                     <div className={styles.overlay}>
                         <span className={styles.detailsText}>Show details</span>
                     </div>
                 </div>
-                <div className={styles.productInfo} onClick={handleClick}>
+                <div className={styles.productInfo}>
                     <div className={styles.productText}>
                         <h2 id={`product-name-${id}`}>{title}</h2>
-                        <p id={`product-price-${id}`} aria-label={`Price: ${price} dollars`}>{price} $</p>
+                        <p id={`product-price-${id}`} aria-label={`Price: ${discountedPrice} dollars`}>
+                            {discountedPrice} $
+                        </p>
                     </div>
                     <div className={styles.addToCart}>
                         {

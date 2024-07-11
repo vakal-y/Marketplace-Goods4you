@@ -5,31 +5,67 @@ import { Link } from 'react-router-dom';
 import { Product } from '../../interfaces/types';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import { ScrollToSectionProps } from '../../interfaces/types';
+import { debounce } from 'lodash';
+import { useSearchProductsQuery } from '../../slices/apiSlice';
 
 
 const HomePage: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
-    const [products, setProducts] = useState<Product[]>([]);
-    const [perPage, setPerPage] = useState(12);
+    const [searchQuery, setSearchQuery] = useState<string>('');
+    const [limit, setLimit] = useState<number>(12);
+    const [skip, setSkip] = useState<number>(0);
     const [faqOpen, setFaqOpen] = useState<number[]>([]);
+    const [cart, setCart] = useState<{ [key: number]: number }>({});
 
+    // Хранение всех загруженных товаров
+    const [allProducts, setAllProducts] = useState<Product[]>([]);
+
+    // Получение данных с помощью RTK Query
+    const { data, error, isLoading } = useSearchProductsQuery({ q: searchQuery, limit, skip });
+
+    // Обновление списка товаров при загрузке новых данных
     useEffect(() => {
-        fetch('/data.json')
-            .then((res) => res.json())
-            .then((data) => setProducts(data.products))
-            .catch((e) => console.error('Error fetching data:', e))
-    }, []);
+        if (data?.products) {
+            setAllProducts(prevProducts => [...prevProducts, ...data.products]);
+        }
+    }, [data]);
+
+    const handleSearch = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(event.target.value);
+        setSkip(0);
+        setAllProducts([]); // Очистка всех загруженных товаров при поиске
+    });
 
     const loadMoreProducts = () => {
-        setPerPage(perPage + 12);
+        setSkip(prevSkip => prevSkip + limit);
     };
 
     const toggleFaq = (index: number) => {
-        setFaqOpen((prevOpen) =>
+        setFaqOpen(prevOpen =>
             prevOpen.includes(index)
-                ? prevOpen.filter((i) => i !== index)
+                ? prevOpen.filter(i => i !== index)
                 : [...prevOpen, index]
         );
     };
+
+    const handleAddToCart = (productId: number) => {
+        setCart(prevCart => ({
+            ...prevCart,
+            [productId]: (prevCart[productId] || 0) + 1
+        }));
+    };
+
+    const handleRemoveFromCart = (productId: number) => {
+        setCart(prevCart => {
+            const newCart = { ...prevCart };
+            if (newCart[productId] > 1) {
+                newCart[productId]--;
+            } else {
+                delete newCart[productId];
+            }
+            return newCart;
+        });
+    };
+
 
     return (
         <div className={styles.homePage}>
@@ -58,18 +94,23 @@ const HomePage: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
                 <h2 id="catalog-heading">Catalog</h2>
                 <form action="" className={styles.search}>
                     <label htmlFor="search-input" className="visually-hidden"></label>
-                    <input id="search-input" type="text" placeholder="Search by title" aria-label="Search by title" />
+                    <input id="search-input" type="text" placeholder="Search by title" aria-label="Search by title" onChange={handleSearch} />
                 </form>
                 <div className={styles.cards} role="list" aria-label="Product list">
-                    {products.slice(0, perPage).map((product) => (
-                        <ProductCard key={product.id} product={product} />
+                    {isLoading && <p>Loading...</p>}
+                    {error && <p>Error loading products.</p>}
+                    {allProducts.map(product => (
+                        <ProductCard
+                            key={product.id}
+                            product={product}
+                            cartQuantity={cart[product.id] || 0}
+                            onAddToCart={() => handleAddToCart(product.id)}
+                            onRemoveFromCart={() => handleRemoveFromCart(product.id)}
+                        />
                     ))}
                 </div>
-                {perPage < products.length && (
-                    <button className={styles.button}
-                        onClick={loadMoreProducts}
-                        aria-label="Show more products"
-                        aria-controls="catalog">
+                {data && data.products.length < data.total && (
+                    <button className={styles.button} onClick={loadMoreProducts} aria-label="Show more products" aria-controls="catalog">
                         Show more
                     </button>
                 )}
@@ -114,5 +155,6 @@ const HomePage: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
         </div>
     );
 };
+
 
 export default HomePage;

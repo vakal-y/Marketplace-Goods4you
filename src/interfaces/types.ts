@@ -33,3 +33,10 @@ export interface CartState {
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null;
 }
+
+export interface ProductCardProps {
+    product: Product;
+    cartQuantity: number;
+    onAddToCart: () => void;
+    onRemoveFromCart: () => void;
+}

@@ -8,7 +8,10 @@ export const apiSlice = createApi({
         getCartByUserId: builder.query<{ products: Product[] }, string>({
             query: (userId) => `carts/user/${userId}`,
         }),
+        searchProducts: builder.query<{ products: Product[], total: number }, { q: string, limit: number, skip: number }>({
+            query: ({ q, limit, skip }) => `/products/search?q=${q}&limit=${limit}&skip=${skip}`,
+        }),
     }),
 });
 
-export const { useGetCartByUserIdQuery } = apiSlice;
+export const { useGetCartByUserIdQuery, useSearchProductsQuery } = apiSlice;
