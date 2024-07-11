@@ -1,16 +1,20 @@
-import store from "../store/store";
+import { store } from "../store/store";
 
 export interface Product {
     id: number;
-    name: string;
+    title: string;
     price: number;
-    images: string[];
+    thumbnail: string;
+    quantity: number;
+    total: number;
+    discountPercentage: number;
+    discountTotal: number;
     description: string;
     warranty: number;
     ships: number;
     rate: number;
-    quantity: number;
     category: string;
+
 }
 
 export type ScrollToSectionFunction = (id: string) => void;
@@ -23,7 +27,7 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export interface CartState {
-    items: any[];
+    items: Product[];
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null;
 }

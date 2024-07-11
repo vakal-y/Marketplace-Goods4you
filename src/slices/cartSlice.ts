@@ -1,20 +1,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { RootState, CartState } from '../interfaces/types';
-import { apiSlice } from './apiSlice';
+import { RootState, CartState, Product } from '../interfaces/types';
 
+// Начальное состояние
 const initialState: CartState = {
     items: [],
     status: 'idle',
     error: null,
 };
 
-export const fetchCart = createAsyncThunk<any, string>(
+// Асинхронный thunk для получения данных корзины
+export const fetchCart = createAsyncThunk<Product[], string>(
     'cart/fetchCart',
-    async (userId: string, { dispatch }) => {
-        const result = await dispatch(apiSlice.endpoints.getCartByUserId.initiate(userId)).unwrap();
-        return result;
-    });
+    async (userId: string) => {
+        const response = await fetch(`https://dummyjson.com/carts/user/${userId}`);
+        const data = await response.json();
+        return data.carts[0].products;
+    }
+);
 
+// Создание среза корзины
 const cartSlice = createSlice({
     name: 'cart',
     initialState,
@@ -26,7 +30,7 @@ const cartSlice = createSlice({
             })
             .addCase(fetchCart.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.items = Array.isArray(action.payload) ? action.payload : [];
+                state.items = action.payload;
             })
             .addCase(fetchCart.rejected, (state, action) => {
                 state.status = 'failed';
@@ -36,4 +40,7 @@ const cartSlice = createSlice({
 });
 
 export const selectCartItems = (state: RootState) => state.cart.items;
+export const selectCartStatus = (state: RootState) => state.cart.status;
+export const selectCartError = (state: RootState) => state.cart.error;
+
 export default cartSlice.reducer;

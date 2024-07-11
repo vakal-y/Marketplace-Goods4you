@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from '@reduxjs/toolkit';
 import { apiSlice } from '../slices/apiSlice';
 import cartReducer from '../slices/cartSlice';
 
