@@ -40,3 +40,7 @@ export interface ProductCardProps {
     onAddToCart: () => void;
     onRemoveFromCart: () => void;
 }
+
+export interface ButtonAddToCartProps {
+    onClick: () => void;
+}

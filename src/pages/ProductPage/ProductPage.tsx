@@ -7,6 +7,7 @@ import starTrue from '../../assets/startrue.svg';
 import starFalse from '../../assets/starfalse.svg';
 import minusBig from '../../assets/minusBig.svg';
 import plusBig from '../../assets/plusBig.svg';
+import ButtonAddToCart from '../../ui/ButtonAddToCart';
 
 const ProductPage: React.FC = () => {
     const [product, setProduct] = useState<Product | null>(null);
@@ -131,18 +132,13 @@ const ProductPage: React.FC = () => {
                                     </button>
                                 </div>
                             ) : (
-                                <button
-                                    onClick={handleAddToCart}
-                                    className={styles.productAddToCart}
-                                    aria-label="Add to Cart">
-                                    Add to Cart
-                                </button>
+                                <ButtonAddToCart onClick={handleAddToCart} />
                             )}
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
+            </section >
+        </div >
     );
 };
 

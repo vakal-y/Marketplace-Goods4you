@@ -66,6 +66,7 @@ const HomePage: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
         });
     };
 
+    const showLoadMoreButton = data && allProducts.length < data.total;
 
     return (
         <div className={styles.homePage}>
@@ -109,7 +110,7 @@ const HomePage: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
                         />
                     ))}
                 </div>
-                {data && data.products.length < data.total && (
+                {showLoadMoreButton && (
                     <button className={styles.button} onClick={loadMoreProducts} aria-label="Show more products" aria-controls="catalog">
                         Show more
                     </button>

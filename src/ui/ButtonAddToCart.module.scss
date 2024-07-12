@@ -1,0 +1,33 @@
+@import '../styles/vars.scss';
+
+.productAddToCart {
+    display    : flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.productAddToCart {
+    width : 176px;
+    height: 62px;
+
+    justify-content : center;
+    background-color: $red;
+    border          : none;
+    border-radius   : 4px;
+
+    cursor    : pointer;
+    transition: background-color 0.3s ease-in-out;
+
+    color      : $white;
+    font-size  : 16px;
+    font-weight: 400;
+    line-height: 22px;
+
+    &:hover {
+        background-color: $darkRed;
+    }
+
+    &:focus:not(:hover) {
+        transition-delay: 0.3s;
+    }
+}
