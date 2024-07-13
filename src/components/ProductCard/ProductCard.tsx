@@ -4,6 +4,7 @@ import cart from '../../assets/cart.svg';
 import { Link } from 'react-router-dom';
 import minusSmall from '../../assets/minusSmall.svg';
 import plusSmall from '../../assets/plusSmall.svg';
+import ButtonAddToCart from '../../ui/ButtonAddToCart';
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, cartQuantity, onAddToCart, onRemoveFromCart }) => {
     const { id, title, price, discountPercentage, thumbnail } = product;
@@ -65,9 +66,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, cartQuantity, onAddT
                                     </button>
                                 </div>
                             ) : (
-                                <button onClick={handleAddToCart} className={styles.cardButton} aria-label={`Add ${title} to cart`}>
-                                    <img src={cart} alt={title} />
-                                </button>
+                                <ButtonAddToCart
+                                    onClick={handleAddToCart}
+                                    size="small"
+                                    icon={cart}
+                                    aria-label={`Add ${title} to cart`}
+                                    className={styles.cardButton}
+                                />
                             )
                         }
                     </div>

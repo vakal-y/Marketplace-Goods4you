@@ -132,7 +132,7 @@ const ProductPage: React.FC = () => {
                                     </button>
                                 </div>
                             ) : (
-                                <ButtonAddToCart onClick={handleAddToCart} />
+                                <ButtonAddToCart onClick={handleAddToCart} size="large">Add to Cart</ButtonAddToCart>
                             )}
                         </div>
                     </div>

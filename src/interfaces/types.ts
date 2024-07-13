@@ -42,5 +42,12 @@ export interface ProductCardProps {
 }
 
 export interface ButtonAddToCartProps {
-    onClick: () => void;
+    size: 'large' | 'small';
+    children?: React.ReactNode;
+    onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+    disabled?: boolean;
+    icon?: string;
+    title?: string;
+    className?: string;
+    ariaLabel?: string;
 }
