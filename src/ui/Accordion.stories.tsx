@@ -36,5 +36,5 @@ Default.storyName = 'Accordion';
 
 export const DarkBackground = Template.bind({});
 DarkBackground.parameters = {
-    backgrounds: { default: 'dark' },
+    backgrounds: { default: 'purple dark' },
 };
