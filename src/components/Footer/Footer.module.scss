@@ -10,16 +10,6 @@
     background-color: $darkGrey;
     color           : $white;
 
-    .logo {
-        font-size  : 30px;
-        font-weight: bold;
-        line-height: 44px;
-
-        &:hover {
-            color: $red;
-        }
-    }
-
     .nav {
         display    : flex;
         align-items: center;
@@ -53,20 +43,11 @@
         }
     }
 
-    @media (max-width: 1024px) {
-
-        .logo {
-            font-size: 24px;
-        }
-    }
+    @media (max-width: 1024px) {}
 
     @media (max-width: 768px) {
         width  : 100%;
         padding: 10px;
-
-        .logo {
-            font-size: 20px;
-        }
 
         .navList {
             gap: 20px;

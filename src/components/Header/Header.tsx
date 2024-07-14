@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
 import cart from '../../assets/cart.svg';
 import { ScrollToSectionProps } from '../../interfaces/types';
+import Logo from '../../ui/Logo';
 
 const Header: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
     const location = useLocation();
@@ -36,9 +37,7 @@ const Header: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
 
     return (
         <header className={styles.header} aria-label="Site Header">
-            <div className={styles.logo}>
-                <Link to="/" onClick={() => scrollToSection('home')} aria-label="Logo">Goods4you</Link>
-            </div>
+            <Logo scrollToSection={scrollToSection} />
             <nav className={styles.nav}>
                 <ul className={styles.navList} role="navigation" aria-label="Main Navigation">
                     <li className={styles.navItem}>

@@ -1,0 +1,78 @@
+@import '../styles/vars.scss';
+
+.accordion {
+    display       : flex;
+    flex-direction: column;
+
+
+    .faqItem {
+        border-bottom: 1px solid $white;
+
+        .faqHeader {
+            display        : flex;
+            justify-content: space-between;
+            align-items    : center;
+            cursor         : pointer;
+            padding        : 10px 0;
+
+            h3 {
+                margin: 20px 0;
+
+                color      : $white;
+                font-size  : 20px;
+                font-weight: 400;
+                line-height: 30px;
+            }
+
+            .icon {
+                width          : 25px;
+                height         : 25px;
+                display        : flex;
+                align-items    : center;
+                justify-content: center;
+                position       : relative;
+
+                &::before,
+                &::after {
+                    content         : '';
+                    position        : absolute;
+                    width           : 25px;
+                    height          : 2px;
+                    background-color: $white;
+                    transition      : transform 0.4s ease;
+                }
+
+                &::before {
+                    transform: rotate(90deg);
+                }
+            }
+
+            &.open .icon::before {
+                transform: rotate(-45deg);
+            }
+
+            &.open .icon::after {
+                transform: rotate(45deg);
+            }
+        }
+
+        .faqContentInner {
+            overflow  : hidden;
+            height    : 0;
+            transition: height 0.3s ease;
+
+            &.open {
+                height: auto;
+            }
+
+            p {
+                margin-bottom: 20px;
+
+                color      : $white;
+                font-size  : 16px;
+                font-weight: 600;
+                line-height: 26px;
+            }
+        }
+    }
+}

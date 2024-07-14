@@ -51,3 +51,15 @@ export interface ButtonAddToCartProps {
     className?: string;
     ariaLabel?: string;
 }
+
+export interface LogoProps {
+    scrollToSection: ScrollToSectionFunction;
+}
+
+export interface AccordionProps {
+    faqs?: {
+        id: number;
+        question: string;
+        answer: string;
+    }[];
+}

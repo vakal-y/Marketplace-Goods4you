@@ -124,35 +124,6 @@
                 }
             }
         }
-
-        .cardButton {
-            width          : 50px;
-            height         : 50px;
-            display        : flex;
-            align-items    : center;
-            justify-content: center;
-            border-radius  : 4px;
-            border         : none;
-            overflow       : hidden;
-            transition     : background-color 0.3s ease-in-out;
-
-            background-color: $red;
-            cursor          : pointer;
-
-            &:hover {
-                background-color: $darkRed;
-            }
-
-            &:focus:not(:hover) {
-                transition-delay: 0.3s;
-            }
-
-            img {
-                width     : 18px;
-                height    : 18px;
-                object-fit: cover;
-            }
-        }
     }
 
     @media (max-width: 1200px) {
