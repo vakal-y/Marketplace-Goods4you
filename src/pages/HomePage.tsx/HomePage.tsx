@@ -12,7 +12,7 @@ import Accordion from '../../ui/Accordion';
 
 const HomePage: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
     const [searchQuery, setSearchQuery] = useState<string>('');
-    const [limit, setLimit] = useState<number>(12);
+    const [limit] = useState<number>(12);
     const [skip, setSkip] = useState<number>(0);
 
     const [cart, setCart] = useState<{ [key: number]: number }>({});

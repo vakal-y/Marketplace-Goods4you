@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { User } from '../interfaces/types';
 
 export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: fetchBaseQuery({
         baseUrl: 'https://dummyjson.com',
-        prepareHeaders: (headers, { getState }) => {
+        prepareHeaders: (headers) => {
             const token = localStorage.getItem('token');
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`);
@@ -20,7 +21,7 @@ export const authApi = createApi({
                 body: { username, password, expiresInMins: 30 },
             }),
         }),
-        getCurrentUser: builder.query<any, void>({
+        getCurrentUser: builder.query<User, void>({
             query: () => '/auth/me',
         }),
     }),

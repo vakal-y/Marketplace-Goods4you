@@ -1,27 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
 import cart from '../../assets/cart.svg';
 import { ScrollToSectionProps } from '../../interfaces/types';
 import Logo from '../../ui/Logo';
+import { useGetCurrentUserQuery } from '../../services/authApi';
 
 const Header: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
     const location = useLocation();
     const navigate = useNavigate();
     const [totalQuantity, setTotalQuantity] = useState<number | null>(null);
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const { data: user, isSuccess } = useGetCurrentUserQuery(undefined, {
+        skip: !localStorage.getItem('token'),
+    });
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        setIsLoggedIn(!!token);
-        if (token) {
-            fetchCartData();
+        if (user) {
+            fetchCartData(user.id);
         }
-    }, []);
+    }, [user]);
 
-    const fetchCartData = async () => {
+    const fetchCartData = async (userId: number) => {
         try {
-            const response = await fetch('https://dummyjson.com/carts/user/1');
+            const response = await fetch(`https://dummyjson.com/carts/user/${userId}`);
             if (response.ok) {
                 const data = await response.json();
                 if (data.carts && data.carts.length > 0 && data.carts[0].totalQuantity > 0) {
@@ -66,14 +67,14 @@ const Header: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
                         <Link to="/cart" aria-label="Cart">
                             <span>Cart</span>
                             <img className={styles.navImage} src={cart} alt="cart" />
-                            {isLoggedIn && totalQuantity !== null && totalQuantity > 0 && (
+                            {isSuccess && totalQuantity !== null && totalQuantity > 0 && (
                                 <span className={styles.counter}>{totalQuantity}</span>
                             )}
                         </Link>
                     </li>
                     <li className={styles.navItem}>
-                        {isLoggedIn ? (
-                            <span>User Name</span>
+                        {isSuccess ? (
+                            <span>{user.firstName} {user.lastName}</span>
                         ) : (
                             <Link to="/login" aria-label="Sign In">Sign in</Link>
                         )}
