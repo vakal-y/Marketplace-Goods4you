@@ -1,29 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useGetCurrentUserQuery } from '../../services/authApi';
 import styles from './Header.module.scss';
 import cart from '../../assets/cart.svg';
 import { ScrollToSectionProps } from '../../interfaces/types';
 import Logo from '../../ui/Logo';
 
 const Header: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
-    const { data: user, error, isLoading } = useGetCurrentUserQuery();
     const location = useLocation();
     const navigate = useNavigate();
     const [totalQuantity, setTotalQuantity] = useState<number | null>(null);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
     useEffect(() => {
-        const userId = 33;
+        const token = localStorage.getItem('token');
+        setIsLoggedIn(!!token);
+        if (token) {
+            fetchCartData();
+        }
+    }, []);
 
-        fetch(`https://dummyjson.com/carts/user/${userId}`)
-            .then(res => res.json())
-            .then(data => {
+    const fetchCartData = async () => {
+        try {
+            const response = await fetch('https://dummyjson.com/carts/user/1');
+            if (response.ok) {
+                const data = await response.json();
                 if (data.carts && data.carts.length > 0 && data.carts[0].totalQuantity > 0) {
                     setTotalQuantity(data.carts[0].totalQuantity);
+                } else {
+                    setTotalQuantity(0);
                 }
-            })
-            .catch(err => console.error('Error fetching cart data:', err));
-    }, []);
+            } else {
+                console.error('Failed to fetch cart data:', response.status);
+                setTotalQuantity(0);
+            }
+        } catch (error) {
+            console.error('Error fetching cart data:', error);
+            setTotalQuantity(0);
+        }
+    };
 
     const handleLinkClick = (section: string, event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
@@ -52,18 +66,17 @@ const Header: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
                         <Link to="/cart" aria-label="Cart">
                             <span>Cart</span>
                             <img className={styles.navImage} src={cart} alt="cart" />
-                            {totalQuantity !== null && totalQuantity > 0 && (
+                            {isLoggedIn && totalQuantity !== null && totalQuantity > 0 && (
                                 <span className={styles.counter}>{totalQuantity}</span>
                             )}
                         </Link>
                     </li>
                     <li className={styles.navItem}>
-                        {user ? (
-                            <span>{user.firstName} {user.lastName}</span>
+                        {isLoggedIn ? (
+                            <span>User Name</span>
                         ) : (
                             <Link to="/login" aria-label="Sign In">Sign in</Link>
-                        )
-                        }
+                        )}
                     </li>
                 </ul>
             </nav>

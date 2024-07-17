@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { RootState } from '../../store/store';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const token = useSelector((state: any) => state.auth.token);
+    const token = useSelector((state: RootState) => state.auth.token);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -12,7 +13,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
         }
     }, [token, navigate]);
 
-    return <>{children}</>;
+    return token ? <>{children}</> : null;
 };
 
 export default ProtectedRoute;

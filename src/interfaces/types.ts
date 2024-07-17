@@ -65,8 +65,21 @@ export interface AccordionProps {
 }
 
 export interface AuthState {
-    user: any;
+    user: User | null;
     token: string | null;
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null;
+    isAuthenticated: boolean;
+}
+
+export interface User {
+    id: number;
+    username: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    gender: string;
+    image: string;
+    token: string;
+    refreshToken: string;
 }

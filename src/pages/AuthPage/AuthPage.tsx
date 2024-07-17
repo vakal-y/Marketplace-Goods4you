@@ -1,29 +1,19 @@
 import { useState } from 'react';
 import styles from './AuthPage.module.scss';
 import { Helmet } from 'react-helmet-async';
+import { loginUser } from '../../slices/authSlice';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store/store';
 
 const AuthPage: React.FC = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const dispatch = useDispatch<AppDispatch>();
 
     const handleLogin = async (event: React.FormEvent) => {
         event.preventDefault();
-        try {
-            const response = await fetch('https://dummyjson.com/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password, expiresInMins: 30 }),
-            });
-            const data = await response.json();
-            if (response.ok) {
-                localStorage.setItem('token', data.token);
-            } else {
-                console.error('Login failed:', data.message);
-            }
-        } catch (error) {
-            console.error('An error occurred:', error);
-        }
-    }
+        dispatch(loginUser({ username, password }));
+    };
 
     return (
         <div className={styles.authPage}>
