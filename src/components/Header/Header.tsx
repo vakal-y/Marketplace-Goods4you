@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useGetCurrentUserQuery } from '../../services/authApi';
 import styles from './Header.module.scss';
 import cart from '../../assets/cart.svg';
 import { ScrollToSectionProps } from '../../interfaces/types';
 import Logo from '../../ui/Logo';
 
 const Header: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
+    const { data: user, error, isLoading } = useGetCurrentUserQuery();
     const location = useLocation();
     const navigate = useNavigate();
     const [totalQuantity, setTotalQuantity] = useState<number | null>(null);
@@ -56,7 +58,12 @@ const Header: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
                         </Link>
                     </li>
                     <li className={styles.navItem}>
-                        <Link to="#" aria-label="User Account">Johnson Smith</Link>
+                        {user ? (
+                            <span>{user.firstName} {user.lastName}</span>
+                        ) : (
+                            <Link to="/login" aria-label="Sign In">Sign in</Link>
+                        )
+                        }
                     </li>
                 </ul>
             </nav>

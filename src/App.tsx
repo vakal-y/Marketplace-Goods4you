@@ -9,6 +9,8 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import './App.scss';
 import { scrollToSection } from './helpers/scrollToSection';
+import AuthPage from './pages/AuthPage/AuthPage';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -31,8 +33,9 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<HomePage scrollToSection={scrollToSection} />} />
             <Route path="/product/:id" element={<ProductPage />} />
-            <Route path="/cart" element={<CartPage />} />
+            <Route path="/cart" element={<ProtectedRoute><CartPage /></ProtectedRoute>} />
             <Route path="*" element={<NotFoundPage />} />
+            <Route path="/login" element={<AuthPage />} />
           </Routes>
         </HelmetProvider>
       </main>

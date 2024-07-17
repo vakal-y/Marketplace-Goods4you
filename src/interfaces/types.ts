@@ -63,3 +63,10 @@ export interface AccordionProps {
         answer: string;
     }[];
 }
+
+export interface AuthState {
+    user: any;
+    token: string | null;
+    status: 'idle' | 'loading' | 'succeeded' | 'failed';
+    error: string | null;
+}
