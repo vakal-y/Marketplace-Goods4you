@@ -9,10 +9,21 @@ const initialState: CartState = {
 };
 
 // Асинхронный thunk для получения данных корзины
-export const fetchCart = createAsyncThunk<Product[], string>(
+export const fetchCart = createAsyncThunk<Product[], void, { state: RootState }>(
     'cart/fetchCart',
-    async (userId: string) => {
-        const response = await fetch(`https://dummyjson.com/carts/user/${userId}`);
+    async (_, { getState, rejectWithValue }) => {
+        const state = getState();
+        const user = state.auth.user;
+
+        if (!user) {
+            return rejectWithValue('User is not authenticated');
+        }
+
+        const response = await fetch(`https://dummyjson.com/carts/user/${user.id}`);
+        if (!response.ok) {
+            return rejectWithValue('Failed to fetch cart data');
+        }
+
         const data = await response.json();
         return data.carts[0].products;
     }

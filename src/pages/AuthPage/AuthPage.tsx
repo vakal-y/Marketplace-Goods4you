@@ -1,19 +1,41 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './AuthPage.module.scss';
 import { Helmet } from 'react-helmet-async';
-import { loginUser } from '../../slices/authSlice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store/store';
+import { useNavigate } from 'react-router-dom';
+import { setToken, setUser } from '../../slices/authSlice';
+import { useLoginUserMutation, useGetCurrentUserQuery } from '../../services/authApi';
+
 
 const AuthPage: React.FC = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
+    const [loginUser, { isLoading, isError, error }] = useLoginUserMutation();
+    const { data: currentUser, refetch } = useGetCurrentUserQuery(undefined, {
+        skip: !localStorage.getItem('token'),
+    });
+
+    useEffect(() => {
+        if (currentUser) {
+            dispatch(setUser(currentUser));
+        }
+    }, [currentUser, dispatch]);
 
     const handleLogin = async (event: React.FormEvent) => {
         event.preventDefault();
-        dispatch(loginUser({ username, password }));
+        try {
+            const result = await loginUser({ username, password }).unwrap();
+            dispatch(setToken(result.token));
+            refetch();
+            navigate('/');
+        } catch (err) {
+            console.error('Failed to login:', err);
+        }
     };
+
 
     return (
         <div className={styles.authPage}>
@@ -38,6 +60,9 @@ const AuthPage: React.FC = () => {
                     />
                     <button type="submit">Sign in</button>
                 </form>
+                {isLoading && <p>Loading...</p>}
+                {isError && <p>Error: {error && 'data' in error ? (error.data as { message: string }).message : 'Unknown error'}</p>}
+                {currentUser && <p>Welcome, {currentUser.username}!</p>}
             </section>
         </div>
     )

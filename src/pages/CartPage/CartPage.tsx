@@ -5,19 +5,21 @@ import styles from './CartPage.module.scss';
 import CartItem from '../../components/CartItem/CartItem';
 import { fetchCart, selectCartItems, selectCartStatus, selectCartError } from '../../slices/cartSlice';
 import { useAppDispatch } from '../../helpers/hook';
+import { RootState } from '../../store/store';
 
 const Cart: React.FC = () => {
     const dispatch = useAppDispatch();
     const products = useSelector(selectCartItems);
     const cartStatus = useSelector(selectCartStatus);
     const cartError = useSelector(selectCartError);
-    const userId = '33';
+    const user = useSelector((state: RootState) => state.auth.user);
+    const userId = user?.id;
 
     useEffect(() => {
-        if (cartStatus === 'idle') {
-            dispatch(fetchCart(userId));
+        if (userId && cartStatus === 'idle') {
+            dispatch(fetchCart());
         }
-    }, [cartStatus, dispatch]);
+    }, [cartStatus, dispatch, userId]);
 
     return (
         <div className={styles.cartPage} aria-label="Shopping Cart Page">

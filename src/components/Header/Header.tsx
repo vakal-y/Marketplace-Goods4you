@@ -1,44 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
 import cart from '../../assets/cart.svg';
 import { ScrollToSectionProps } from '../../interfaces/types';
 import Logo from '../../ui/Logo';
-import { useGetCurrentUserQuery } from '../../services/authApi';
+import { RootState } from '../../store/store';
+import { useAppDispatch, useAppSelector } from '../../helpers/hook';
+import { fetchCart, selectCartItems } from '../../slices/cartSlice';
 
 const Header: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
     const location = useLocation();
     const navigate = useNavigate();
-    const [totalQuantity, setTotalQuantity] = useState<number | null>(null);
-    const { data: user, isSuccess } = useGetCurrentUserQuery(undefined, {
-        skip: !localStorage.getItem('token'),
-    });
+    const dispatch = useAppDispatch();
+    const user = useAppSelector((state: RootState) => state.auth.user);
+    const isAuthenticated = useAppSelector((state: RootState) => state.auth.isAuthenticated);
+    const cartItems = useAppSelector(selectCartItems);
+
+    const totalQuantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
 
     useEffect(() => {
-        if (user) {
-            fetchCartData(user.id);
+        if (isAuthenticated) {
+            dispatch(fetchCart());
         }
-    }, [user]);
-
-    const fetchCartData = async (userId: number) => {
-        try {
-            const response = await fetch(`https://dummyjson.com/carts/user/${userId}`);
-            if (response.ok) {
-                const data = await response.json();
-                if (data.carts && data.carts.length > 0 && data.carts[0].totalQuantity > 0) {
-                    setTotalQuantity(data.carts[0].totalQuantity);
-                } else {
-                    setTotalQuantity(0);
-                }
-            } else {
-                console.error('Failed to fetch cart data:', response.status);
-                setTotalQuantity(0);
-            }
-        } catch (error) {
-            console.error('Error fetching cart data:', error);
-            setTotalQuantity(0);
-        }
-    };
+    }, [user, dispatch]);
 
     const handleLinkClick = (section: string, event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
@@ -67,14 +52,14 @@ const Header: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
                         <Link to="/cart" aria-label="Cart">
                             <span>Cart</span>
                             <img className={styles.navImage} src={cart} alt="cart" />
-                            {isSuccess && totalQuantity !== null && totalQuantity > 0 && (
+                            {isAuthenticated && totalQuantity !== null && totalQuantity > 0 && (
                                 <span className={styles.counter}>{totalQuantity}</span>
                             )}
                         </Link>
                     </li>
                     <li className={styles.navItem}>
-                        {isSuccess ? (
-                            <span>{user.firstName} {user.lastName}</span>
+                        {isAuthenticated ? (
+                            <span>{user?.firstName} {user?.lastName}</span>
                         ) : (
                             <Link to="/login" aria-label="Sign In">Sign in</Link>
                         )}
