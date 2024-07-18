@@ -4,8 +4,6 @@ import { AuthState, User } from '../interfaces/types';
 const initialState: AuthState = {
     user: null,
     token: localStorage.getItem('token'),
-    status: 'idle',
-    error: null,
     isAuthenticated: false,
 };
 

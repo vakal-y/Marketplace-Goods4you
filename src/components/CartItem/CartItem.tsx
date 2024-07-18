@@ -5,33 +5,58 @@ import cart from '../../assets/cart.svg';
 import { Link } from 'react-router-dom';
 import minusSmall from '../../assets/minusSmall.svg';
 import plusSmall from '../../assets/plusSmall.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateCart } from '../../slices/cartSlice';
+import { RootState, AppDispatch } from '../../store/store';
 
 const CartItem: React.FC<{ product: Product }> = ({ product }) => {
     const { id, title, price, thumbnail, quantity } = product;
     const mainImage = thumbnail;
     const [cartQuantity, setCartQuantity] = useState<number>(quantity);
     const [showControls, setShowControls] = useState<boolean>(true);
+    const dispatch = useDispatch<AppDispatch>();
+    const userId = useSelector((state: RootState) => state.auth.user?.id);
 
     useEffect(() => {
         setCartQuantity(quantity);
     }, [quantity]);
 
-    const handleAddToCart = () => {
-        setCartQuantity(1);
-        setShowControls(true);
+    const handleAddToCart = async () => {
+        try {
+            await dispatch(updateCart({ userId: userId || 0, products: [{ ...product, quantity: 1 }] }));
+            setCartQuantity(1);
+            setShowControls(true);
+        } catch (error) {
+            console.error('Failed to update cart:', error);
+        }
     };
 
-    const handleDelete = () => {
-        setShowControls(false);
+    const handleDelete = async () => {
+        try {
+            await dispatch(updateCart({ userId: userId || 0, products: [{ ...product, quantity: 0 }] }));
+            setShowControls(false);
+        } catch (error) {
+            console.error('Failed to update cart:', error);
+        }
     };
 
-    const handleIncreaseQuantity = () => {
-        setCartQuantity((prevQuantity) => prevQuantity + 1);
+    const handleIncreaseQuantity = async () => {
+        try {
+            await dispatch(updateCart({ userId: userId || 0, products: [{ ...product, quantity: cartQuantity + 1 }] }));
+            setCartQuantity((prevQuantity) => prevQuantity + 1);
+        } catch (error) {
+            console.error('Failed to update cart:', error);
+        }
     };
 
-    const handleDecreaseQuantity = () => {
+    const handleDecreaseQuantity = async () => {
         if (cartQuantity > 1) {
-            setCartQuantity((prevQuantity) => prevQuantity - 1);
+            try {
+                await dispatch(updateCart({ userId: userId || 0, products: [{ ...product, quantity: cartQuantity - 1 }] }));
+                setCartQuantity((prevQuantity) => prevQuantity - 1);
+            } catch (error) {
+                console.error('Failed to update cart:', error);
+            }
         }
     };
 

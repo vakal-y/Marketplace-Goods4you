@@ -18,7 +18,7 @@ export const authApi = createApi({
             query: ({ username, password }) => ({
                 url: '/auth/login',
                 method: 'POST',
-                body: { username, password, expiresInMins: 30 },
+                body: { username, password, expiresInMins: 2000 },
             }),
         }),
         getCurrentUser: builder.query<User, void>({
