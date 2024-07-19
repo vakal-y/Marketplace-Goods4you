@@ -17,6 +17,7 @@ export interface Product {
     category: string;
     images: string[];
     tags: string[];
+    stock: number;
 }
 
 export type ScrollToSectionFunction = (id: string) => void;
@@ -32,6 +33,7 @@ export interface CartState {
     items: Product[];
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null;
+    totalQuantity: number;
 }
 
 export interface ProductCardProps {

@@ -10,7 +10,7 @@ import { updateCart } from '../../slices/cartSlice';
 import { RootState, AppDispatch } from '../../store/store';
 
 const CartItem: React.FC<{ product: Product }> = ({ product }) => {
-    const { id, title, price, thumbnail, quantity } = product;
+    const { id, title, price, thumbnail, quantity, stock } = product;
     const mainImage = thumbnail;
     const [cartQuantity, setCartQuantity] = useState<number>(quantity);
     const [showControls, setShowControls] = useState<boolean>(true);
@@ -19,6 +19,7 @@ const CartItem: React.FC<{ product: Product }> = ({ product }) => {
 
     useEffect(() => {
         setCartQuantity(quantity);
+        setShowControls(quantity > 0);
     }, [quantity]);
 
     const handleAddToCart = async () => {
@@ -41,11 +42,14 @@ const CartItem: React.FC<{ product: Product }> = ({ product }) => {
     };
 
     const handleIncreaseQuantity = async () => {
-        try {
-            await dispatch(updateCart({ userId: userId || 0, products: [{ ...product, quantity: cartQuantity + 1 }] }));
-            setCartQuantity((prevQuantity) => prevQuantity + 1);
-        } catch (error) {
-            console.error('Failed to update cart:', error);
+        if (cartQuantity < stock) {
+            try {
+                await dispatch(updateCart({ userId: userId || 0, products: [{ ...product, quantity: cartQuantity + 1 }] }));
+                setCartQuantity(cartQuantity + 1);
+            } catch (error) {
+                console.error('Failed to update cart:', error);
+                ``
+            }
         }
     };
 
@@ -53,7 +57,7 @@ const CartItem: React.FC<{ product: Product }> = ({ product }) => {
         if (cartQuantity > 1) {
             try {
                 await dispatch(updateCart({ userId: userId || 0, products: [{ ...product, quantity: cartQuantity - 1 }] }));
-                setCartQuantity((prevQuantity) => prevQuantity - 1);
+                setCartQuantity(cartQuantity - 1);
             } catch (error) {
                 console.error('Failed to update cart:', error);
             }
@@ -79,14 +83,15 @@ const CartItem: React.FC<{ product: Product }> = ({ product }) => {
                         <div className={styles.addedControl}>
                             <button
                                 onClick={handleDecreaseQuantity}
-                                className={styles.cartButton}
+                                className={`${styles.cartButton} ${cartQuantity <= 1 ? styles.disabled : ''}`}
                                 disabled={cartQuantity <= 1}>
                                 <img src={minusSmall} alt="Decrease quantity" />
                             </button>
                             <p>{cartQuantity} {cartQuantity === 1 ? 'item' : 'items'}</p>
                             <button
                                 onClick={handleIncreaseQuantity}
-                                className={styles.cartButton}>
+                                className={`${styles.cartButton} ${cartQuantity >= stock ? styles.disabled : ''}`}
+                                disabled={cartQuantity >= stock}>
                                 <img src={plusSmall} alt="Increase quantity" />
                             </button>
                         </div>

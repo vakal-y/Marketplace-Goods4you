@@ -6,6 +6,7 @@ const initialState: CartState = {
     items: [],
     status: 'idle',
     error: null,
+    totalQuantity: 0,
 };
 
 // Асинхронный thunk для получения данных корзины
@@ -25,7 +26,21 @@ export const fetchCart = createAsyncThunk<Product[], void, { state: RootState }>
         }
 
         const data = await response.json();
-        return data.carts[0].products;
+        const products = data.carts[0].products;
+
+        const updatedProducts = await Promise.all(products.map(async (product: Product) => {
+            const productResponse = await fetch(`https://dummyjson.com/products/${product.id}`);
+            if (!productResponse.ok) {
+                throw new Error('Failed to fetch product data');
+            }
+            const productData = await productResponse.json();
+            return {
+                ...product,
+                stock: productData.stock,
+            };
+        }));
+
+        return updatedProducts;
     }
 );
 
@@ -83,6 +98,7 @@ const cartSlice = createSlice({
                     const updatedProduct = action.payload.find(p => p.id === item.id);
                     return updatedProduct ? { ...item, ...updatedProduct } : item;
                 });
+                state.totalQuantity = state.items.reduce((total, product) => total + product.quantity, 0);
             })
             .addCase(updateCart.rejected, (state, action) => {
                 state.status = 'failed';
@@ -94,5 +110,6 @@ const cartSlice = createSlice({
 export const selectCartItems = (state: RootState) => state.cart.items;
 export const selectCartStatus = (state: RootState) => state.cart.status;
 export const selectCartError = (state: RootState) => state.cart.error;
+export const selectTotalQuantity = (state: RootState) => state.cart.totalQuantity;
 
 export default cartSlice.reducer;

@@ -5,8 +5,9 @@ import cart from '../../assets/cart.svg';
 import { ScrollToSectionProps } from '../../interfaces/types';
 import Logo from '../../ui/Logo';
 import { useGetCurrentUserQuery } from '../../services/authApi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout, setUser } from '../../slices/authSlice';
+import { selectTotalQuantity } from '../../slices/cartSlice';
 
 const Header: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
     const location = useLocation();
@@ -14,7 +15,7 @@ const Header: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
     const dispatch = useDispatch();
     const [totalQuantity, setTotalQuantity] = useState<number | null>(null);
     const token = localStorage.getItem('token');
-
+    const cartQuantity = useSelector(selectTotalQuantity);
 
     const { data: user, error, isLoading } = useGetCurrentUserQuery(undefined, {
         skip: !token,
@@ -54,6 +55,9 @@ const Header: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
         }
     };
 
+    useEffect(() => {
+        setTotalQuantity(cartQuantity);
+    }, [cartQuantity]);
 
     const handleLinkClick = (section: string, event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
