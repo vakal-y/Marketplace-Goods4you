@@ -54,11 +54,11 @@ const HomePage: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
 
     const handleRemoveFromCart = (product: Product) => {
         if (userId) {
-            const updatedItems = cartItems.map(item =>
-                item.id === product.id
+            const updatedItems = cartItems
+                .map(item => item.id === product.id
                     ? { ...item, quantity: item.quantity - 1 }
-                    : item
-            ).filter(item => item.quantity > 0);
+                    : item)
+                .filter(item => item.quantity > 0);
 
             dispatch(updateCart({ userId, products: updatedItems }));
         }

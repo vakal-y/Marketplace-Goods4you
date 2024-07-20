@@ -47,14 +47,24 @@ export const fetchCart = createAsyncThunk<Product[], void, { state: RootState }>
 // Асинхронный thunk для обновления данных корзины
 export const updateCart = createAsyncThunk<Product[], { userId: number, products: Product[] }, { state: RootState }>(
     'cart/updateCart',
-    async ({ userId, products }, { rejectWithValue }) => {
+    async ({ userId, products }, { rejectWithValue, getState }) => {
+        const state = getState();
+        const existingCart = state.cart.items;
+
+        const finalCart = products.map(product => {
+            const existingProduct = existingCart.find(item => item.id === product.id);
+            return existingProduct
+                ? { ...existingProduct, quantity: product.quantity }
+                : { ...product, quantity: product.quantity };
+        });
+
         try {
             const response = await fetch(`https://dummyjson.com/carts/${userId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     merge: false,
-                    products: products
+                    products: finalCart
                 }),
             });
             if (!response.ok) {
@@ -70,6 +80,7 @@ export const updateCart = createAsyncThunk<Product[], { userId: number, products
         }
     }
 );
+
 
 export const checkProductInCart = createAsyncThunk<Product, { productId: number }, { state: RootState }>(
     'cart/checkProductInCart',
