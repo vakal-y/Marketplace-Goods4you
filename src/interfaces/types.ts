@@ -38,9 +38,8 @@ export interface CartState {
 
 export interface ProductCardProps {
     product: Product;
-    cartQuantity: number;
-    onAddToCart: () => void;
-    onRemoveFromCart: () => void;
+    onAddToCart: (product: Product) => void;
+    onRemoveFromCart: (product: Product) => void;
 }
 
 export interface ButtonAddToCartProps {
@@ -82,4 +81,9 @@ export interface User {
     image: string;
     token: string;
     refreshToken: string;
+}
+
+export interface CartItem {
+    id: number;
+    quantity: number;
 }

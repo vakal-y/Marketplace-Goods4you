@@ -1,5 +1,5 @@
 import styles from './CartItem.module.scss';
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 import { Product } from '../../interfaces/types';
 import cart from '../../assets/cart.svg';
 import { Link } from 'react-router-dom';
@@ -10,23 +10,71 @@ import { updateCart } from '../../slices/cartSlice';
 import { RootState, AppDispatch } from '../../store/store';
 
 const CartItem: React.FC<{ product: Product }> = ({ product }) => {
-    const { id, title, price, thumbnail, quantity, stock } = product;
+    const { id, title, price, thumbnail, stock } = product;
     const mainImage = thumbnail;
-    const [cartQuantity, setCartQuantity] = useState<number>(quantity);
-    const [showControls, setShowControls] = useState<boolean>(true);
+    // const [cartQuantity, setCartQuantity] = useState<number>(quantity);
+    // const [showControls, setShowControls] = useState<boolean>(true);
     const dispatch = useDispatch<AppDispatch>();
     const userId = useSelector((state: RootState) => state.auth.user?.id);
+    const cartQuantity = useSelector((state: RootState) => {
+        const item = state.cart.items.find(item => item.id === id);
+        return item ? item.quantity : 0;
+    });
+    const showControls = cartQuantity > 0;
 
-    useEffect(() => {
-        setCartQuantity(quantity);
-        setShowControls(quantity > 0);
-    }, [quantity]);
+    // useEffect(() => {
+    //     setCartQuantity(quantity);
+    //     setShowControls(quantity > 0);
+    // }, [quantity]);
+
+    // const handleAddToCart = async () => {
+    //     try {
+    //         await dispatch(updateCart({ userId: userId || 0, products: [{ ...product, quantity: 1 }] }));
+    //         setCartQuantity(1);
+    //         setShowControls(true);
+    //     } catch (error) {
+    //         console.error('Failed to update cart:', error);
+    //     }
+    // };
+
+    // const handleDelete = async () => {
+    //     try {
+    //         await dispatch(updateCart({ userId: userId || 0, products: [{ ...product, quantity: 0 }] }));
+    //         setShowControls(false);
+    //     } catch (error) {
+    //         console.error('Failed to update cart:', error);
+    //     }
+    // };
+
+    // const handleIncreaseQuantity = async () => {
+    //     if (cartQuantity < stock) {
+    //         try {
+    //             await dispatch(updateCart({ userId: userId || 0, products: [{ ...product, quantity: cartQuantity + 1 }] }));
+    //             setCartQuantity(cartQuantity + 1);
+    //         } catch (error) {
+    //             console.error('Failed to update cart:', error);
+    //             ``
+    //         }
+    //     }
+    // };
+
+    // const handleDecreaseQuantity = async () => {
+    //     if (cartQuantity > 1) {
+    //         try {
+    //             await dispatch(updateCart({ userId: userId || 0, products: [{ ...product, quantity: cartQuantity - 1 }] }));
+    //             setCartQuantity(cartQuantity - 1);
+    //         } catch (error) {
+    //             console.error('Failed to update cart:', error);
+    //         }
+    //     }
+    // };
 
     const handleAddToCart = async () => {
         try {
-            await dispatch(updateCart({ userId: userId || 0, products: [{ ...product, quantity: 1 }] }));
-            setCartQuantity(1);
-            setShowControls(true);
+            await dispatch(updateCart({
+                userId: userId || 0,
+                products: [{ ...product, quantity: 1 }]
+            }));
         } catch (error) {
             console.error('Failed to update cart:', error);
         }
@@ -34,8 +82,10 @@ const CartItem: React.FC<{ product: Product }> = ({ product }) => {
 
     const handleDelete = async () => {
         try {
-            await dispatch(updateCart({ userId: userId || 0, products: [{ ...product, quantity: 0 }] }));
-            setShowControls(false);
+            await dispatch(updateCart({
+                userId: userId || 0,
+                products: [{ ...product, quantity: 0 }]
+            }));
         } catch (error) {
             console.error('Failed to update cart:', error);
         }
@@ -44,11 +94,12 @@ const CartItem: React.FC<{ product: Product }> = ({ product }) => {
     const handleIncreaseQuantity = async () => {
         if (cartQuantity < stock) {
             try {
-                await dispatch(updateCart({ userId: userId || 0, products: [{ ...product, quantity: cartQuantity + 1 }] }));
-                setCartQuantity(cartQuantity + 1);
+                await dispatch(updateCart({
+                    userId: userId || 0,
+                    products: [{ ...product, quantity: cartQuantity + 1 }]
+                }));
             } catch (error) {
                 console.error('Failed to update cart:', error);
-                ``
             }
         }
     };
@@ -56,13 +107,16 @@ const CartItem: React.FC<{ product: Product }> = ({ product }) => {
     const handleDecreaseQuantity = async () => {
         if (cartQuantity > 1) {
             try {
-                await dispatch(updateCart({ userId: userId || 0, products: [{ ...product, quantity: cartQuantity - 1 }] }));
-                setCartQuantity(cartQuantity - 1);
+                await dispatch(updateCart({
+                    userId: userId || 0,
+                    products: [{ ...product, quantity: cartQuantity - 1 }]
+                }));
             } catch (error) {
                 console.error('Failed to update cart:', error);
             }
         }
     };
+
 
     return (
         <div className={styles.cartItem}>

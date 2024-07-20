@@ -71,6 +71,26 @@ export const updateCart = createAsyncThunk<Product[], { userId: number, products
     }
 );
 
+export const checkProductInCart = createAsyncThunk<Product, { productId: number }, { state: RootState }>(
+    'cart/checkProductInCart',
+    async ({ productId }, { getState, rejectWithValue }) => {
+        const state = getState();
+        const user = state.auth.user;
+
+        if (!user) {
+            return rejectWithValue('User is not authenticated');
+        }
+
+        const response = await fetch(`https://dummyjson.com/products/${productId}`);
+        if (!response.ok) {
+            return rejectWithValue('Failed to fetch product data');
+        }
+
+        const productData = await response.json();
+        return productData;
+    }
+);
+
 // Создание среза корзины
 const cartSlice = createSlice({
     name: 'cart',
@@ -84,6 +104,7 @@ const cartSlice = createSlice({
             .addCase(fetchCart.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 state.items = action.payload;
+                state.totalQuantity = state.items.reduce((total, product) => total + product.quantity, 0);
             })
             .addCase(fetchCart.rejected, (state, action) => {
                 state.status = 'failed';
@@ -103,6 +124,19 @@ const cartSlice = createSlice({
             .addCase(updateCart.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.payload as string;
+            })
+            .addCase(checkProductInCart.fulfilled, (state, action) => {
+                const product = action.payload;
+                const existingProduct = state.items.find(item => item.id === product.id);
+                if (existingProduct) {
+                    existingProduct.quantity += 1;
+                } else {
+                    state.items.push({ ...product, quantity: 1 });
+                }
+                state.totalQuantity = state.items.reduce((total, product) => total + product.quantity, 0);
+            })
+            .addCase(checkProductInCart.rejected, (state, action) => {
+                state.error = action.payload as string;
             });
     }
 });
@@ -111,5 +145,9 @@ export const selectCartItems = (state: RootState) => state.cart.items;
 export const selectCartStatus = (state: RootState) => state.cart.status;
 export const selectCartError = (state: RootState) => state.cart.error;
 export const selectTotalQuantity = (state: RootState) => state.cart.totalQuantity;
+export const selectProductQuantityInCart = (state: RootState, productId: number) => {
+    const item = state.cart.items.find(item => item.id === productId);
+    return item ? item.quantity : 0;
+};
 
 export default cartSlice.reducer;
