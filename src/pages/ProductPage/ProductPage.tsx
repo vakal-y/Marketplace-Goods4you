@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Product } from '../../interfaces/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, AppDispatch, } from '../../interfaces/types';
+import { updateCart, selectCartItems } from '../../slices/cartSlice';
+import { useGetProductByIdQuery } from '../../slices/apiSlice';
 import styles from './ProductPage.module.scss';
 import starTrue from '../../assets/startrue.svg';
 import starFalse from '../../assets/starfalse.svg';
@@ -10,51 +13,79 @@ import plusBig from '../../assets/plusBig.svg';
 import ButtonAddToCart from '../../ui/ButtonAddToCart';
 
 const ProductPage: React.FC = () => {
-    const [product, setProduct] = useState<Product | null>(null);
     const { id } = useParams<{ id: string }>();
-    const [currentImage, setCurrentImage] = useState<string>('');
-    const [cartQuantity, setCartQuantity] = useState<number>(0);
     const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
 
-    useEffect(() => {
-        fetch(`https://dummyjson.com/products/${id}`)
-            .then((response) => response.json())
-            .then((data) => {
-                setProduct(data);
-                setCurrentImage(data.thumbnail);
-            })
-            .catch((error) => {
-                console.error('Error fetching product data:', error);
-                navigate('/404');
-            });
-    }, [id, navigate]);
+    const userId = useSelector((state: RootState) => state.auth.user?.id);
+    const cartItems = useSelector((state: RootState) => selectCartItems(state));
+
+    const { data: product, isLoading, isError } = useGetProductByIdQuery(id || '');
+    const [currentImage, setCurrentImage] = useState<string>('');
+
+    const cartQuantity = cartItems.find(item => item.id === product?.id)?.quantity || 0;
 
     useEffect(() => {
         if (product) {
             document.title = `${product.title} | Goods4you`;
+            setCurrentImage(product.thumbnail);
         }
     }, [product]);
 
+    const updateCartQuantity = (newQuantity: number) => {
+        if (product && userId) {
+            if (newQuantity <= 0) {
+                dispatch(updateCart({
+                    userId,
+                    products: cartItems.filter(item => item.id !== product.id)
+                }));
+            } else {
+                dispatch(updateCart({
+                    userId,
+                    products: cartItems.map(item =>
+                        item.id === product.id ? { ...item, quantity: newQuantity } : item
+                    )
+                }));
+            }
+        }
+    };
+
     const handleAddToCart = () => {
-        setCartQuantity((prevQuantity) => prevQuantity + 1);
+        if (product && userId) {
+            if (cartQuantity === 0) {
+                updateCartQuantity(1);
+            } else {
+                updateCartQuantity(cartQuantity + 1);
+            }
+        }
     };
 
     const handleIncreaseQuantity = () => {
-        setCartQuantity((prevQuantity) => prevQuantity + 1);
+        if (product) {
+            updateCartQuantity(cartQuantity + 1);
+        }
     };
 
     const handleDecreaseQuantity = () => {
-        setCartQuantity((prevQuantity) => (prevQuantity > 0 ? prevQuantity - 1 : 0));
+        if (cartQuantity > 0) {
+            updateCartQuantity(cartQuantity - 1);
+        }
     };
 
     const handleThumbnailClick = (image: string) => {
         setCurrentImage(image);
     };
 
-    if (!product) {
+    if (isLoading) {
+        return <p>Loading...</p>;
+    }
+
+    if (isError || !product) {
         navigate('*');
         return null;
     }
+
+    const showAddToCartButton = cartQuantity === 0;
 
     return (
         <div className={styles.product} role="region" aria-labelledby="product-title">
@@ -119,9 +150,11 @@ const ProductPage: React.FC = () => {
                             Your discount: <b>{product.discountPercentage}%</b>
                         </p>
                         <div className={styles.productButtons}>
-                            {cartQuantity > 0 ? (
+                            {showAddToCartButton ? (
+                                <ButtonAddToCart onClick={handleAddToCart} size="large">Add to Cart</ButtonAddToCart>
+                            ) : (
                                 <div className={styles.cartControls} aria-label={`${cartQuantity} items in cart`}>
-                                    <button onClick={handleDecreaseQuantity} className={styles.cartButton}>
+                                    <button onClick={handleDecreaseQuantity} className={styles.cartButton} disabled={cartQuantity <= 0}>
                                         <img src={minusBig} alt="Decrease quantity" />
                                     </button>
                                     <p>
@@ -131,8 +164,6 @@ const ProductPage: React.FC = () => {
                                         <img src={plusBig} alt="Increase quantity" />
                                     </button>
                                 </div>
-                            ) : (
-                                <ButtonAddToCart onClick={handleAddToCart} size="large">Add to Cart</ButtonAddToCart>
                             )}
                         </div>
                     </div>

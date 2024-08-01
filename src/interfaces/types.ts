@@ -17,6 +17,7 @@ export interface Product {
     category: string;
     images: string[];
     tags: string[];
+    stock: number;
 }
 
 export type ScrollToSectionFunction = (id: string) => void;
@@ -32,13 +33,13 @@ export interface CartState {
     items: Product[];
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null;
+    totalQuantity: number;
 }
 
 export interface ProductCardProps {
     product: Product;
-    cartQuantity: number;
-    onAddToCart: () => void;
-    onRemoveFromCart: () => void;
+    onAddToCart: (product: Product) => void;
+    onRemoveFromCart: (product: Product) => void;
 }
 
 export interface ButtonAddToCartProps {
@@ -62,4 +63,27 @@ export interface AccordionProps {
         question: string;
         answer: string;
     }[];
+}
+
+export interface AuthState {
+    user: User | null;
+    token: string | null;
+    isAuthenticated: boolean;
+}
+
+export interface User {
+    id: number;
+    username: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    gender: string;
+    image: string;
+    token: string;
+    refreshToken: string;
+}
+
+export interface CartItem {
+    id: number;
+    quantity: number;
 }

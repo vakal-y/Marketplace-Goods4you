@@ -9,11 +9,13 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test": "vitest"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.5",
     "@types/react-redux": "^7.1.33",
+    "jsdom": "^24.1.0",
     "lodash": "^4.17.21",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -33,6 +35,8 @@
     "@storybook/react": "^8.2.2",
     "@storybook/react-vite": "^8.2.2",
     "@storybook/test": "^8.2.2",
+    "@testing-library/jest-dom": "^6.4.6",
+    "@testing-library/react": "^16.0.0",
     "@types/lodash": "^4.17.6",
     "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
@@ -45,6 +49,7 @@
     "eslint-plugin-react-refresh": "^0.4.7",
     "eslint-plugin-storybook": "^0.8.0",
     "storybook": "^8.2.2",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vitest": "^2.0.3"
   }
 }

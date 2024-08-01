@@ -1,39 +1,122 @@
 import styles from './CartItem.module.scss';
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 import { Product } from '../../interfaces/types';
 import cart from '../../assets/cart.svg';
 import { Link } from 'react-router-dom';
 import minusSmall from '../../assets/minusSmall.svg';
 import plusSmall from '../../assets/plusSmall.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateCart } from '../../slices/cartSlice';
+import { RootState, AppDispatch } from '../../store/store';
 
 const CartItem: React.FC<{ product: Product }> = ({ product }) => {
-    const { id, title, price, thumbnail, quantity } = product;
+    const { id, title, price, thumbnail, stock } = product;
     const mainImage = thumbnail;
-    const [cartQuantity, setCartQuantity] = useState<number>(quantity);
-    const [showControls, setShowControls] = useState<boolean>(true);
+    // const [cartQuantity, setCartQuantity] = useState<number>(quantity);
+    // const [showControls, setShowControls] = useState<boolean>(true);
+    const dispatch = useDispatch<AppDispatch>();
+    const userId = useSelector((state: RootState) => state.auth.user?.id);
+    const cartQuantity = useSelector((state: RootState) => {
+        const item = state.cart.items.find(item => item.id === id);
+        return item ? item.quantity : 0;
+    });
+    const showControls = cartQuantity > 0;
 
-    useEffect(() => {
-        setCartQuantity(quantity);
-    }, [quantity]);
+    // useEffect(() => {
+    //     setCartQuantity(quantity);
+    //     setShowControls(quantity > 0);
+    // }, [quantity]);
 
-    const handleAddToCart = () => {
-        setCartQuantity(1);
-        setShowControls(true);
-    };
+    // const handleAddToCart = async () => {
+    //     try {
+    //         await dispatch(updateCart({ userId: userId || 0, products: [{ ...product, quantity: 1 }] }));
+    //         setCartQuantity(1);
+    //         setShowControls(true);
+    //     } catch (error) {
+    //         console.error('Failed to update cart:', error);
+    //     }
+    // };
 
-    const handleDelete = () => {
-        setShowControls(false);
-    };
+    // const handleDelete = async () => {
+    //     try {
+    //         await dispatch(updateCart({ userId: userId || 0, products: [{ ...product, quantity: 0 }] }));
+    //         setShowControls(false);
+    //     } catch (error) {
+    //         console.error('Failed to update cart:', error);
+    //     }
+    // };
 
-    const handleIncreaseQuantity = () => {
-        setCartQuantity((prevQuantity) => prevQuantity + 1);
-    };
+    // const handleIncreaseQuantity = async () => {
+    //     if (cartQuantity < stock) {
+    //         try {
+    //             await dispatch(updateCart({ userId: userId || 0, products: [{ ...product, quantity: cartQuantity + 1 }] }));
+    //             setCartQuantity(cartQuantity + 1);
+    //         } catch (error) {
+    //             console.error('Failed to update cart:', error);
+    //             ``
+    //         }
+    //     }
+    // };
 
-    const handleDecreaseQuantity = () => {
-        if (cartQuantity > 1) {
-            setCartQuantity((prevQuantity) => prevQuantity - 1);
+    // const handleDecreaseQuantity = async () => {
+    //     if (cartQuantity > 1) {
+    //         try {
+    //             await dispatch(updateCart({ userId: userId || 0, products: [{ ...product, quantity: cartQuantity - 1 }] }));
+    //             setCartQuantity(cartQuantity - 1);
+    //         } catch (error) {
+    //             console.error('Failed to update cart:', error);
+    //         }
+    //     }
+    // };
+
+    const handleAddToCart = async () => {
+        try {
+            await dispatch(updateCart({
+                userId: userId || 0,
+                products: [{ ...product, quantity: 1 }]
+            }));
+        } catch (error) {
+            console.error('Failed to update cart:', error);
         }
     };
+
+    const handleDelete = async () => {
+        try {
+            await dispatch(updateCart({
+                userId: userId || 0,
+                products: [{ ...product, quantity: 0 }]
+            }));
+        } catch (error) {
+            console.error('Failed to update cart:', error);
+        }
+    };
+
+    const handleIncreaseQuantity = async () => {
+        if (cartQuantity < stock) {
+            try {
+                await dispatch(updateCart({
+                    userId: userId || 0,
+                    products: [{ ...product, quantity: cartQuantity + 1 }]
+                }));
+            } catch (error) {
+                console.error('Failed to update cart:', error);
+            }
+        }
+    };
+
+    const handleDecreaseQuantity = async () => {
+        if (cartQuantity > 1) {
+            try {
+                await dispatch(updateCart({
+                    userId: userId || 0,
+                    products: [{ ...product, quantity: cartQuantity - 1 }]
+                }));
+            } catch (error) {
+                console.error('Failed to update cart:', error);
+            }
+        }
+    };
+
 
     return (
         <div className={styles.cartItem}>
@@ -54,14 +137,15 @@ const CartItem: React.FC<{ product: Product }> = ({ product }) => {
                         <div className={styles.addedControl}>
                             <button
                                 onClick={handleDecreaseQuantity}
-                                className={styles.cartButton}
+                                className={`${styles.cartButton} ${cartQuantity <= 1 ? styles.disabled : ''}`}
                                 disabled={cartQuantity <= 1}>
                                 <img src={minusSmall} alt="Decrease quantity" />
                             </button>
                             <p>{cartQuantity} {cartQuantity === 1 ? 'item' : 'items'}</p>
                             <button
                                 onClick={handleIncreaseQuantity}
-                                className={styles.cartButton}>
+                                className={`${styles.cartButton} ${cartQuantity >= stock ? styles.disabled : ''}`}
+                                disabled={cartQuantity >= stock}>
                                 <img src={plusSmall} alt="Increase quantity" />
                             </button>
                         </div>

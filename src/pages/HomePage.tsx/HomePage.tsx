@@ -2,28 +2,25 @@ import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import styles from './HomePage.module.scss';
 import { Link } from 'react-router-dom';
-import { Product } from '../../interfaces/types';
+import { Product, RootState, ScrollToSectionProps, AppDispatch } from '../../interfaces/types';
 import ProductCard from '../../components/ProductCard/ProductCard';
-import { ScrollToSectionProps } from '../../interfaces/types';
 import { debounce } from 'lodash';
-import { useSearchProductsQuery } from '../../slices/apiSlice';
 import Accordion from '../../ui/Accordion';
-
+import { useSearchProductsQuery } from '../../slices/apiSlice';
+import { updateCart } from '../../slices/cartSlice';
+import { useSelector, useDispatch } from 'react-redux';
 
 const HomePage: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
     const [searchQuery, setSearchQuery] = useState<string>('');
-    const [limit, setLimit] = useState<number>(12);
+    const [limit] = useState<number>(12);
     const [skip, setSkip] = useState<number>(0);
+    const dispatch = useDispatch<AppDispatch>();
+    const cartItems = useSelector((state: RootState) => state.cart.items);
+    const userId = useSelector((state: RootState) => state.auth.user?.id);
 
-    const [cart, setCart] = useState<{ [key: number]: number }>({});
-
-    // Хранение всех загруженных товаров
     const [allProducts, setAllProducts] = useState<Product[]>([]);
-
-    // Получение данных с помощью RTK Query
     const { data, error, isLoading } = useSearchProductsQuery({ q: searchQuery, limit, skip });
 
-    // Обновление списка товаров при загрузке новых данных
     useEffect(() => {
         if (data?.products) {
             setAllProducts(prevProducts => [...prevProducts, ...data.products]);
@@ -33,34 +30,39 @@ const HomePage: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
     const handleSearch = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(event.target.value);
         setSkip(0);
-        setAllProducts([]); // Очистка всех загруженных товаров при поиске
-    });
+        setAllProducts([]);
+    }, 300);
 
     const loadMoreProducts = () => {
         setSkip(prevSkip => prevSkip + limit);
     };
 
-
-    const handleAddToCart = (productId: number) => {
-        setCart(prevCart => ({
-            ...prevCart,
-            [productId]: (prevCart[productId] || 0) + 1
-        }));
-    };
-
-    const handleRemoveFromCart = (productId: number) => {
-        setCart(prevCart => {
-            const newCart = { ...prevCart };
-            if (newCart[productId] > 1) {
-                newCart[productId]--;
-            } else {
-                delete newCart[productId];
-            }
-            return newCart;
-        });
-    };
-
     const showLoadMoreButton = data && allProducts.length < data.total;
+
+    const handleAddToCart = (product: Product) => {
+        if (userId) {
+            const existingProduct = cartItems.find(item => item.id === product.id);
+            const updatedItems = existingProduct
+                ? cartItems.map(item => item.id === product.id
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item)
+                : [...cartItems, { ...product, quantity: 1 }];
+
+            dispatch(updateCart({ userId, products: updatedItems }));
+        }
+    };
+
+    const handleRemoveFromCart = (product: Product) => {
+        if (userId) {
+            const updatedItems = cartItems
+                .map(item => item.id === product.id
+                    ? { ...item, quantity: item.quantity - 1 }
+                    : item)
+                .filter(item => item.quantity > 0);
+
+            dispatch(updateCart({ userId, products: updatedItems }));
+        }
+    };
 
     return (
         <div className={styles.homePage}>
@@ -98,9 +100,8 @@ const HomePage: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
                         <ProductCard
                             key={product.id}
                             product={product}
-                            cartQuantity={cart[product.id] || 0}
-                            onAddToCart={() => handleAddToCart(product.id)}
-                            onRemoveFromCart={() => handleRemoveFromCart(product.id)}
+                            onAddToCart={() => handleAddToCart(product)}
+                            onRemoveFromCart={() => handleRemoveFromCart(product)}
                         />
                     ))}
                 </div>
