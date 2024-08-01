@@ -1,7 +1,5 @@
 # Mock Marketplace
 
-This is a demo of a marketplace application built with React, TypeScript, RTK Query and Vite. The application includes features such as user authentication, product management, a shopping cart, and a search function with debounce.
-
 ## Features
 - React: A JavaScript library for building user interfaces.
 - TypeScript: Strongly typed programming language that builds on JavaScript.
