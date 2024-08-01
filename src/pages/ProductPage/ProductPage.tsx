@@ -7,33 +7,33 @@ import starTrue from '../../assets/startrue.svg';
 import starFalse from '../../assets/starfalse.svg';
 import minusBig from '../../assets/minusBig.svg';
 import plusBig from '../../assets/plusBig.svg';
+import ButtonAddToCart from '../../ui/ButtonAddToCart';
 
 const ProductPage: React.FC = () => {
-    const [products, setProducts] = useState<Product[]>([]);
+    const [product, setProduct] = useState<Product | null>(null);
     const { id } = useParams<{ id: string }>();
     const [currentImage, setCurrentImage] = useState<string>('');
     const [cartQuantity, setCartQuantity] = useState<number>(0);
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('/data.json')
+        fetch(`https://dummyjson.com/products/${id}`)
             .then((response) => response.json())
             .then((data) => {
-                setProducts(data.products);
-                const product = data.products.find((p: Product) => p.id === parseInt(id!, 10));
-                if (product && product.images.length > 0) {
-                    setCurrentImage(product.images[0]);
-                }
+                setProduct(data);
+                setCurrentImage(data.thumbnail);
             })
-            .catch((error) => console.error('Error fetching data:', error));
-    }, [id]);
+            .catch((error) => {
+                console.error('Error fetching product data:', error);
+                navigate('/404');
+            });
+    }, [id, navigate]);
 
-    const product = products.find((product) => product.id === parseInt(id!, 10));
-
-    if (!product) {
-        navigate('*');
-        return null;
-    }
+    useEffect(() => {
+        if (product) {
+            document.title = `${product.title} | Goods4you`;
+        }
+    }, [product]);
 
     const handleAddToCart = () => {
         setCartQuantity((prevQuantity) => prevQuantity + 1);
@@ -47,108 +47,98 @@ const ProductPage: React.FC = () => {
         setCartQuantity((prevQuantity) => (prevQuantity > 0 ? prevQuantity - 1 : 0));
     };
 
+    const handleThumbnailClick = (image: string) => {
+        setCurrentImage(image);
+    };
+
+    if (!product) {
+        navigate('*');
+        return null;
+    }
+
     return (
-        <div
-            className={styles.product}
-            role="region"
-            aria-labelledby="product-title">
+        <div className={styles.product} role="region" aria-labelledby="product-title">
             <Helmet>
-                <title>Essence Mascara Lash Princess | Goods4you</title>
+                <title>{product.title} | Goods4you</title>
                 <meta name="description" content="Any products from famous brands with worldwide delivery" />
             </Helmet>
             <section className={styles.productGallery}>
                 <div className={styles.mainImage}>
-                    <img src={currentImage} alt={product.name} />
+                    <img src={currentImage} alt={product.title} />
                 </div>
-                <div className={styles.gallery}>
-                    {product.images.map((image, index) => (
-                        <img
-                            key={index}
-                            src={image}
-                            alt={`${product.name} ${index + 1}`}
-                            onClick={() => setCurrentImage(image)}
-                            className={currentImage === image ? styles.activeThumbnail : ''}
-                        />
-                    ))}
-                </div>
+
+                {product.images.length > 1 && (
+                    <div className={styles.gallery}>
+                        {product.images.map((image, index) => (
+                            <img
+                                key={index}
+                                src={image}
+                                alt={`${product.title} ${index + 1}`}
+                                onClick={() => handleThumbnailClick(image)}
+                                className={currentImage === image ? styles.activeThumbnail : ''}
+                            />
+                        ))}
+                    </div>
+                )}
+
             </section>
             <section className={styles.productDescription}>
-                <h2 id="product-title">{product.name}</h2>
-                <div
-                    className={styles.productRateDescription}
-                    aria-label="Product rating and category">
+                <h2 id="product-title">{product.title}</h2>
+                <div className={styles.productRateDescription} aria-label="Product rating and category">
                     <div className={styles.productRate}>
-                        <img src={starTrue} alt="starTrue" />
-                        <img src={starTrue} alt="starTrue" />
-                        <img src={starTrue} alt="starTrue" />
-                        <img src={starTrue} alt="starTrue" />
-                        <img src={starFalse} alt="starTrue" />
+                        {Array.from({ length: Math.round(product.rating) }, (_, index) => (
+                            <img key={index} src={starTrue} alt="starTrue" />
+                        ))}
+                        {Array.from({ length: 5 - Math.round(product.rating) }, (_, index) => (
+                            <img key={index} src={starFalse} alt="starFalse" />
+                        ))}
                     </div>
                     <p>{product.category}</p>
                 </div>
-                <p
-                    className={styles.inStock}
-                    aria-label={`In Stock - Only ${product.quantity} left`}>
-                    In Stock - Only {product.quantity} left!
+                <p className={styles.inStock} aria-label={product.availabilityStatus}>
+                    {product.availabilityStatus}
                 </p>
-                <p
-                    className={styles.productDescriptionText}
-                    aria-describedby="product-description">
+                <p className={styles.productDescriptionText} aria-describedby="product-description">
                     {product.description}
                 </p>
-                <div
-                    className={styles.warrantyNships}
-                    aria-label="Product warranty and shipping details">
-                    <p>{product.warranty} month warranty</p>
-                    <p>Ships in {product.ships} month</p>
+                <div className={styles.warrantyNships} aria-label="Product warranty and shipping details">
+                    <p>{product.warrantyInformation}</p>
+                    <p>{product.shippingInformation}</p>
                 </div>
                 <div className={styles.productBuy}>
                     <div className={styles.productPriceInfo}>
                         <div className={styles.productPrices}>
-                            <p
-                                className={styles.productDiscountPrice}
-                                aria-label={`Discounted price: ${product.price}$`}>
+                            <p className={styles.productDiscountPrice} aria-label={`Discounted price: ${product.price}$`}>
+                                {(product.price - (product.price * product.discountPercentage) / 100).toFixed(2)}$
+                            </p>
+                            <p className={styles.productPrice} aria-label={`Original price: ${product.price}$`}>
                                 {product.price}$
                             </p>
-                            <p
-                                className={styles.productPrice}
-                                aria-label="Original price: 9.99$">
-                                9.99$
-                            </p>
                         </div>
-                        <p
-                            className={styles.productPersonalDiscount}
-                            aria-label="Your discount: 14.5%">
-                            Your discount: <b>14.5%</b>
+                        <p className={styles.productPersonalDiscount} aria-label="{product.discountPercentage}%">
+                            Your discount: <b>{product.discountPercentage}%</b>
                         </p>
-                    </div>
-                    {cartQuantity > 0 ? (
-                        <div
-                            className={styles.cartControls}
-                            aria-label={`${cartQuantity} items in cart`}>
-                            <button
-                                onClick={handleDecreaseQuantity}
-                                className={styles.cartButton}>
-                                <img src={minusBig} alt="Decrease quantity" />
-                            </button>
-                            <p>{cartQuantity} {cartQuantity === 1 ? 'item' : 'items'}</p>
-                            <button
-                                onClick={handleIncreaseQuantity}
-                                className={styles.cartButton}>
-                                <img src={plusBig} alt="Decrease uantity" />
-                            </button>
+                        <div className={styles.productButtons}>
+                            {cartQuantity > 0 ? (
+                                <div className={styles.cartControls} aria-label={`${cartQuantity} items in cart`}>
+                                    <button onClick={handleDecreaseQuantity} className={styles.cartButton}>
+                                        <img src={minusBig} alt="Decrease quantity" />
+                                    </button>
+                                    <p>
+                                        {cartQuantity} {cartQuantity === 1 ? 'item' : 'items'}
+                                    </p>
+                                    <button onClick={handleIncreaseQuantity} className={styles.cartButton}>
+                                        <img src={plusBig} alt="Increase quantity" />
+                                    </button>
+                                </div>
+                            ) : (
+                                <ButtonAddToCart onClick={handleAddToCart} size="large">Add to Cart</ButtonAddToCart>
+                            )}
                         </div>
-                    ) : (
-                        <button
-                            onClick={handleAddToCart}
-                            className={styles.productAddToCart}
-                            aria-label="Add to Cart">
-                            Add to Cart
-                        </button>
-                    )}
+                    </div>
                 </div>
-            </section>
-        </div>
+            </section >
+        </div >
     );
 };
 

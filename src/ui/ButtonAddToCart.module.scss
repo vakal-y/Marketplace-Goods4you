@@ -1,0 +1,43 @@
+@import '../styles/vars.scss';
+
+.productAddToCart {
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+    border         : none;
+    border-radius  : 4px;
+    cursor         : pointer;
+    transition     : background-color 0.3s ease-in-out;
+    color          : $white;
+    font-size      : 16px;
+    font-weight    : 400;
+    line-height    : 22px;
+
+    &.large {
+        margin-left: auto;
+        width      : 176px;
+        height     : 62px;
+    }
+
+    &.small {
+        width : 50px;
+        height: 50px;
+    }
+
+    background-color: rgb(241, 79, 79);
+
+    &:hover {
+        background-color: rgb(140, 40, 40);
+    }
+
+    &:disabled {
+        background-color: rgb(248, 175, 175);
+        cursor          : not-allowed;
+    }
+}
+
+.icon {
+    width     : 18px;
+    height    : 18px;
+    object-fit: cover;
+}

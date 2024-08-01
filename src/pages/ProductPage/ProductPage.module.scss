@@ -13,12 +13,13 @@
         display       : flex;
         flex-direction: column;
 
-
         .mainImage {
-            width: 520px;
+            width : 520px;
+            height: 520px;
 
             img {
                 width     : 100%;
+                height    : 100%;
                 object-fit: contain;
             }
         }
@@ -26,26 +27,28 @@
         .gallery {
             height                    : 70px;
             display                   : flex;
+            flex-direction            : row;
             box-sizing                : border-box;
-            margin                    : 5px 0;
-            margin-bottom             : auto;
+            margin-top                : 10px;
+            align-items               : center;
             overflow-x                : auto;
+            overflow-y                : hidden;
             -webkit-overflow-scrolling: touch;
-
-            gap: 20px;
+            gap                       : 20px;
 
             img {
                 width        : 70px;
                 height       : 70px;
                 object-fit   : contain;
                 cursor       : pointer;
-                border       : 3px solid transparent;
                 border-radius: 4px;
                 transition   : border 0.3s ease;
+                box-sizing   : border-box;
             }
 
             .activeThumbnail {
-                border: 3px solid $rateGrey;
+                border    : 3px solid $rateGrey;
+                box-sizing: border-box;
             }
         }
     }
@@ -112,6 +115,13 @@
             display       : flex;
             flex-direction: column;
             gap           : 12px;
+
+            p {
+                color      : $categoryGrey;
+                font-size  : 16px;
+                font-weight: 400;
+                line-height: 24px;
+            }
         }
 
         .productBuy {
@@ -121,21 +131,20 @@
             margin-top      : 24px;
             padding         : 12px;
             align-items     : center;
+            justify-content : center;
             background-color: $buyBackground;
             border-radius   : 6px;
 
             .productPriceInfo {
-                width      : 331px;
-                height     : 62px;
+                width      : 100%;
                 display    : flex;
-                padding    : 0 20px;
                 align-items: center;
 
                 .productPrices {
-                    height        : 62px;
                     display       : flex;
                     flex-direction: column;
                     padding-right : 24px;
+                    margin-left   : 20px;
                     border-right  : 1px solid $dividedLine;
 
                     .productDiscountPrice {
@@ -155,77 +164,60 @@
                 }
 
                 .productPersonalDiscount {
-                    height      : 24px;
                     display     : flex;
                     padding-left: 24px;
+                    margin-right: 5px;
+                    align-items : center;
                     gap         : 8px;
 
+                    color      : $darkGrey;
                     font-size  : 16px;
                     font-weight: 400;
                     line-height: 24px;
                 }
             }
 
-            .productAddToCart {
-                width           : 176px;
-                max-width       : 300px;
-                height          : 62px;
-                display         : flex;
-                margin-left     : 89px;
-                justify-content : center;
-                align-items     : center;
-                background-color: $red;
-                border          : none;
-                border-radius   : 4px;
+            .productButtons {
+                width      : 254px;
+                display    : flex;
+                margin-left: auto;
+                align-items: center;
 
-                cursor    : pointer;
-                transition: background-color 0.3s ease-in-out;
-
-                color      : $white;
-                font-size  : 16px;
-                font-weight: 400;
-                line-height: 22px;
-
-                &:hover {
-                    background-color: $darkRed;
-                }
-
-                &:focus:not(:hover) {
-                    transition-delay: 0.3s;
-                }
-            }
-
-            .cartControls {
-                width          : 254px;
-                max-width      : 300px;
-                height         : 62px;
-                display        : flex;
-                align-items    : center;
-                justify-content: space-between;
-                margin-left    : 11px;
-
-                .cartButton {
-                    width           : 70px;
-                    height          : 62px;
-                    display         : flex;
-                    justify-content : center;
-                    align-items     : center;
-                    background-color: $red;
-                    color           : $white;
-                    font-size       : 24px;
-                    border          : none;
-                    border-radius   : 4px;
+                .cartControls {
+                    width          : 100%;
+                    display        : flex;
+                    margin-left    : auto;
+                    align-items    : center;
+                    justify-content: space-between;
 
 
-                    cursor    : pointer;
-                    transition: background-color 0.3s ease-in-out;
+                    .cartButton {
+                        width           : 70px;
+                        height          : 62px;
+                        display         : flex;
+                        justify-content : center;
+                        align-items     : center;
+                        background-color: $red;
+                        color           : $white;
+                        font-size       : 24px;
+                        border          : none;
+                        border-radius   : 4px;
 
-                    &:hover {
-                        background-color: $darkRed;
-                    }
+                        cursor    : pointer;
+                        transition: background-color 0.3s ease-in-out;
 
-                    &:focus:not(:hover) {
-                        transition-delay: 0.3s;
+                        &:hover {
+                            background-color: $darkRed;
+                        }
+
+                        &:focus:not(:hover) {
+                            transition-delay: 0.3s;
+                        }
+
+                        img {
+                            width : 24px;
+                            height: 24px;
+                        }
                     }
 
                     p {
@@ -256,6 +248,25 @@
 
         .productDescription {
             margin-top: 20px;
+        }
+
+        .productBuy {
+            flex-direction: column;
+
+            .productPriceInfo,
+            .cartControls {
+                width : 100%;
+                margin: 10px 0;
+            }
+
+            .productAddToCart {
+                width : 200px;
+                height: 100%;
+            }
+
+            .cartControls {
+                margin-left: 0;
+            }
         }
     }
 

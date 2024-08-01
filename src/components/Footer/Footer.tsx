@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './Footer.module.scss';
 import { ScrollToSectionProps } from '../../interfaces/types';
+import Logo from '../../ui/Logo';
 
 const Footer: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
     const location = useLocation();
@@ -20,9 +21,7 @@ const Footer: React.FC<ScrollToSectionProps> = ({ scrollToSection }) => {
 
     return (
         <footer className={styles.footer} role="contentinfo" aria-label="Footer">
-            <div className={styles.logo}>
-                <Link to="/" onClick={(event) => handleLinkClick('home', event)} aria-label="Logo">Goods4you</Link>
-            </div>
+            <Logo scrollToSection={scrollToSection} />
             <nav className={styles.nav}>
                 <ul className={styles.navList} role="navigation" aria-label="Footer Navigation">
                     <li className={styles.navItem}>
