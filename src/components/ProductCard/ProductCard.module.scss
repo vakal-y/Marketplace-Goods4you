@@ -1,0 +1,267 @@
+@import '../../styles/vars.scss';
+
+.productCard {
+    width         : 370px;
+    height        : 366px;
+    display       : flex;
+    flex-direction: column;
+    overflow      : hidden;
+    position      : relative;
+
+    .productImage {
+        width        : 370px;
+        height       : 300px;
+        display      : flex;
+        border-radius: 4px;
+        overflow     : hidden;
+        position     : relative;
+
+        img {
+            width     : 100%;
+            height    : 100%;
+            object-fit: cover;
+            transition: opacity 0.3s ease-in-out;
+        }
+    }
+
+    .overlay {
+        position       : absolute;
+        top            : 0;
+        left           : 0;
+        right          : 0;
+        bottom         : 0;
+        background     : $overlay;
+        opacity        : 0;
+        display        : flex;
+        justify-content: center;
+        align-items    : center;
+        transition     : opacity 0.3s ease-in-out;
+        color          : white;
+        font-size      : 26px;
+        font-weight    : 800;
+
+        &:hover {
+            opacity: 1;
+            cursor : pointer;
+        }
+
+        .detailsText {
+            opacity: 0.6;
+        }
+    }
+
+    .productInfo {
+        display        : flex;
+        justify-content: space-between;
+        align-items    : center;
+
+        .productText {
+            width          : 310px;
+            height         : 50px;
+            display        : flex;
+            flex-direction : column;
+            margin-top     : 10px;
+            margin-bottom  : 6px;
+            justify-content: space-between;
+            overflow       : hidden;
+            color          : $darkGrey;
+
+            h2 {
+                white-space  : nowrap;
+                overflow     : hidden;
+                text-overflow: ellipsis;
+                font-size    : 16px;
+                font-weight  : 600;
+                line-height  : 20px;
+            }
+
+            p {
+                font-size  : 18px;
+                font-weight: 400;
+                line-height: 24px;
+            }
+        }
+    }
+
+    .addToCart {
+        display    : flex;
+        margin-left: 10px;
+
+        .cartControls {
+            width          : 188px;
+            height         : 50px;
+            display        : flex;
+            align-items    : center;
+            justify-content: space-between;
+
+            p {
+                width : 50px;
+                height: 20px;
+                color : $darkGrey;
+            }
+
+            .cartButton {
+                width           : 50px;
+                height          : 50px;
+                display         : flex;
+                justify-content : center;
+                align-items     : center;
+                background-color: $red;
+                color           : $white;
+                font-size       : 14px;
+                border          : none;
+                border-radius   : 4px;
+
+                cursor    : pointer;
+                transition: background-color 0.3s ease-in-out;
+
+                &:hover {
+                    background-color: $darkRed;
+                }
+
+                &:focus:not(:hover) {
+                    transition-delay: 0.3s;
+                }
+            }
+        }
+
+        .cardButton {
+            width          : 50px;
+            height         : 50px;
+            display        : flex;
+            align-items    : center;
+            justify-content: center;
+            border-radius  : 4px;
+            border         : none;
+            overflow       : hidden;
+            transition     : background-color 0.3s ease-in-out;
+
+            background-color: $red;
+            cursor          : pointer;
+
+            &:hover {
+                background-color: $darkRed;
+            }
+
+            &:focus:not(:hover) {
+                transition-delay: 0.3s;
+            }
+
+            img {
+                width     : 18px;
+                height    : 18px;
+                object-fit: cover;
+            }
+        }
+    }
+
+    @media (max-width: 1200px) {
+        width: 90%;
+
+        .productImage {
+            width : 100%;
+            height: auto;
+        }
+
+        .productInfo {
+            .productText {
+                h2 {
+                    font-size: 14px;
+                }
+
+                p {
+                    font-size: 16px;
+                }
+            }
+        }
+
+        .addToCart {
+            .cartControls {
+                .cartButton {
+                    width : 40px;
+                    height: 40px;
+                }
+            }
+
+            .cardButton {
+                width : 40px;
+                height: 40px;
+            }
+        }
+    }
+
+    @media (max-width: 992px) {
+        .productImage {
+            height: 250px;
+        }
+
+        .productInfo {
+            .productText {
+                h2 {
+                    font-size: 12px;
+                }
+
+                p {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .addToCart {
+            .cartControls {
+                .cartButton {
+                    width : 35px;
+                    height: 35px;
+                }
+            }
+
+            .cardButton {
+                width : 35px;
+                height: 35px;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        width: 100%;
+
+        .productImage {
+            width : 50%;
+            height: 200px;
+        }
+
+        .productInfo {
+            flex-direction: column;
+            align-items   : flex-start;
+
+            .productText {
+                width: 100%;
+
+                h2 {
+                    font-size: 14px;
+                }
+
+                p {
+                    font-size: 12px;
+                }
+            }
+        }
+
+        .addToCart {
+            margin-left: 0;
+            margin-top : 10px;
+
+            .cartControls {
+                .cartButton {
+                    width : 30px;
+                    height: 30px;
+                }
+            }
+
+            .cardButton {
+                width : 30px;
+                height: 30px;
+            }
+        }
+    }
+}

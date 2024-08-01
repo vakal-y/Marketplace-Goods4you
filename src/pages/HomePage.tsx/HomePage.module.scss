@@ -1,0 +1,347 @@
+@import '../../styles/vars.scss';
+
+.homePage {
+    width         : 1440px;
+    display       : flex;
+    flex-direction: column;
+    margin        : 0 auto;
+
+    .home {
+        position        : relative;
+        z-index         : 1;
+        display         : flex;
+        background-color: $violet;
+
+        .homeContent {
+            width         : 1180px;
+            display       : flex;
+            flex-direction: column;
+            height        : 500px;
+            display       : flex;
+            margin        : 0 auto;
+            padding       : 115px 0;
+            row-gap       : 30px;
+            border-top    : 1px solid $white;
+
+            h1 {
+                position   : absolute;
+                z-index    : 0;
+                top        : 123px;
+                left       : 176px;
+                color      : $whiteT;
+                font-size  : 200px;
+                font-weight: 700;
+                line-height: 300px;
+            }
+
+            h3 {
+                color      : $white;
+                font-size  : 36px;
+                font-weight: 400;
+                line-height: 50px;
+            }
+
+            p {
+                color      : $white;
+                font-size  : 16px;
+                font-weight: 600;
+                line-height: 24px;
+            }
+
+            .shopping {
+                z-index         : 2;
+                width           : 207px;
+                height          : 62px;
+                display         : flex;
+                align-items     : center;
+                justify-content : center;
+                border-radius   : 4px;
+                background-color: $red;
+                border          : none;
+                cursor          : pointer;
+                transition      : background-color 0.3s ease-in-out;
+
+                color      : $white;
+                font-size  : 16px;
+                font-weight: 400;
+                line-height: 22px;
+
+                &:hover {
+                    background-color: $darkRed;
+                }
+            }
+        }
+    }
+
+    .catalog {
+        width         : 1180px;
+        display       : flex;
+        flex-direction: column;
+        margin        : 48px auto;
+        gap           : 48px;
+
+        h2 {
+            color      : $darkGrey;
+            font-size  : 36px;
+            font-weight: 700;
+            line-height: 56px;
+        }
+
+        .search {
+            width  : 100%;
+            height : 62px;
+            display: flex;
+
+            input {
+                width           : 100%;
+                padding         : 20px;
+                border          : none;
+                border-radius   : 4px;
+                background-color: $lightGrey;
+
+                font-family: Jost;
+                color      : $darkGrey;
+                font-size  : 16;
+                font-weight: 400;
+                line-height: 22;
+
+                &::placeholder {
+                    color      : $grey;
+                    font-size  : 16;
+                    font-weight: 400;
+                    line-height: 22;
+                }
+            }
+        }
+
+        .cards {
+            display              : grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            row-gap              : 20px;
+            column-gap           : 35px;
+        }
+
+        .button {
+            width           : 177px;
+            height          : 62px;
+            display         : flex;
+            align-items     : center;
+            justify-content : center;
+            margin          : 0 auto;
+            padding         : 20px 50px;
+            border-radius   : 4px;
+            border          : none;
+            background-color: $red;
+            cursor          : pointer;
+            transition      : background-color 0.3s ease-in-out;
+
+            color      : $white;
+            font-family: Jost;
+            font-size  : 16px;
+            font-weight: 400;
+            line-height: 22px;
+
+            &:hover {
+                background-color: $darkRed;
+            }
+        }
+
+    }
+
+    .faq {
+        width           : 100%;
+        background-color: $violet;
+
+        .faqContent {
+            width         : 880px;
+            display       : flex;
+            flex-direction: column;
+            margin        : 0 auto;
+            padding       : 60px 0;
+
+            h2 {
+                padding-bottom: 20px;
+                border-bottom : 1px solid$white;
+
+                color      : $white;
+                font-size  : 36px;
+                font-weight: 700;
+                line-height: 56px;
+            }
+
+            .faqItem {
+                border-bottom: 1px solid $white;
+
+                .faqHeader {
+                    display        : flex;
+                    justify-content: space-between;
+                    align-items    : center;
+                    cursor         : pointer;
+                    padding        : 10px 0;
+
+                    h3 {
+                        margin: 20px 0;
+
+                        color      : $white;
+                        font-size  : 20px;
+                        font-weight: 400;
+                        line-height: 30px;
+                    }
+
+                    .icon {
+                        width          : 25px;
+                        height         : 25px;
+                        display        : flex;
+                        align-items    : center;
+                        justify-content: center;
+                        position       : relative;
+
+                        &::before,
+                        &::after {
+                            content         : '';
+                            position        : absolute;
+                            width           : 25px;
+                            height          : 2px;
+                            background-color: $white;
+                            transition      : transform 0.4s ease;
+                        }
+
+                        &::before {
+                            transform: rotate(90deg);
+                        }
+                    }
+
+                    &.open .icon::before {
+                        transform: rotate(-45deg);
+                    }
+
+                    &.open .icon::after {
+                        transform: rotate(45deg);
+                    }
+                }
+
+                .faqContentInner {
+                    overflow  : hidden;
+                    height    : 0;
+                    transition: height 0.3s ease;
+
+                    &.open {
+                        height: auto;
+                    }
+
+                    p {
+                        margin-bottom: 20px;
+
+                        color      : $white;
+                        font-size  : 16px;
+                        font-weight: 600;
+                        line-height: 26px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .homePage {
+        width: 100%;
+
+        .home {
+            width : 100%;
+            height: 300px;
+
+            .homeContent {
+                width  : 100%;
+                padding: 10px;
+
+                h1 {
+                    font-size  : 80px;
+                    line-height: 100px;
+                    top        : 130px;
+                    left       : 70px;
+                }
+
+                h3 {
+                    font-size  : 30px;
+                    line-height: 42px;
+                }
+
+                p {
+                    font-size  : 16px;
+                    line-height: 24px;
+                }
+
+                .shopping {
+                    width      : 207px;
+                    height     : 62px;
+                    font-size  : 16px;
+                    line-height: 22px;
+                }
+            }
+        }
+
+        .catalog {
+            width  : 100%;
+            padding: 0 10px;
+            gap    : 30px;
+
+            h2 {
+                font-size  : 30px;
+                line-height: 46px;
+            }
+
+            .search {
+                width: 100%;
+
+                input {
+                    width      : 100%;
+                    font-size  : 16px;
+                    line-height: 24px;
+                }
+            }
+
+            .cards {
+                width                : 100%;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                column-gap           : 10px;
+            }
+
+            .button {
+                width      : 35%;
+                height     : 60px;
+                font-size  : 18px;
+                line-height: 24px;
+            }
+        }
+
+        .faq {
+            width  : 100%;
+            padding: 0 10px;
+
+            .faqContent {
+                width  : 100%;
+                padding: 0 auto;
+
+                h2 {
+                    font-size  : 30px;
+                    line-height: 46px;
+                }
+
+                .faqItem {
+                    width: 100%;
+
+                    .faqHeader h3 {
+                        font-size  : 20px;
+                        line-height: 30px;
+                    }
+
+                    .faqContentInner p {
+                        font-size  : 16px;
+                        line-height: 26px;
+                    }
+                }
+            }
+        }
+    }
+}

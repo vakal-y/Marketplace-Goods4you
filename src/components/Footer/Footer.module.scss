@@ -1,0 +1,75 @@
+@import '../../styles/vars.scss';
+
+.footer {
+    width           : 1440px;
+    height          : 90px;
+    display         : flex;
+    padding         : 23px 130px;
+    justify-content : space-between;
+    align-items     : center;
+    background-color: $darkGrey;
+    color           : $white;
+
+    .logo {
+        font-size  : 30px;
+        font-weight: bold;
+        line-height: 44px;
+
+        &:hover {
+            color: $red;
+        }
+    }
+
+    .nav {
+        display    : flex;
+        align-items: center;
+
+        .navList {
+            display    : flex;
+            align-items: center;
+            list-style : none;
+            margin     : 0;
+            padding    : 0;
+            gap        : 40px;
+
+            .navItem {
+                font-size  : 14px;
+                font-weight: 600;
+                line-height: 20px;
+
+                a {
+                    display        : flex;
+                    align-items    : center;
+                    gap            : 6px;
+                    text-decoration: none;
+                    color          : inherit;
+
+                    &:hover {
+                        color          : $grey;
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 1024px) {
+
+        .logo {
+            font-size: 24px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        width  : 100%;
+        padding: 10px;
+
+        .logo {
+            font-size: 20px;
+        }
+
+        .navList {
+            gap: 20px;
+        }
+    }
+}
