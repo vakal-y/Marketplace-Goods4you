@@ -4,10 +4,19 @@
 - React: A JavaScript library for building user interfaces.
 - TypeScript: Strongly typed programming language that builds on JavaScript.
 - RTK Query: Powerful data fetching and caching tool from Redux Toolkit.
+- Vite: Next Generation Frontend Tooling for blazing fast builds.
 - Authentication: User login and registration functionality.
 - Product Management: Add and remove products from the cart.
 - Cart Counter: Real-time counter of items in the cart displayed in the header.
 - Search with Debounce: Efficient product search feature to improve user experience.
+
+## Install dependencies:
+
+npm install
+
+##Start the development server:
+
+npm run dev
 
 # React + TypeScript + Vite
 
